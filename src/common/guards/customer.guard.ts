@@ -8,15 +8,14 @@ import { JwtService } from '@nestjs/jwt';
 import { RoleStatus } from '../enums/role_status';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class CustomerGuard implements CanActivate {
     constructor(private jwtService: JwtService) {}
-
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
         const token = request.headers.authorization;
 
         if (!token) {
-        throw new UnauthorizedException('Admin must be logged in');
+        throw new UnauthorizedException('Customer must be logged in');
         }
 
         try {
@@ -24,7 +23,7 @@ export class AdminGuard implements CanActivate {
             secret: 'token',
         });
 
-        if (decoded.role !== RoleStatus.ADMIN) {
+        if (decoded.role !== RoleStatus.CUSTOMER) {
             throw new UnauthorizedException('Unauthorized role');
         }
 

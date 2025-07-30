@@ -6,7 +6,6 @@ import {
     AutoIncrement,
     PrimaryKey,
     AllowNull,
-    Default,
     BelongsTo,
     ForeignKey,
 } from 'sequelize-typescript';
@@ -21,10 +20,6 @@ export class Customer extends Model<Customer> {
 
     @Column(DataType.STRING)
     phone: string;
-
-    @Default(false)
-    @Column(DataType.BOOLEAN)
-    isPhoneVerified: boolean;
 
     @AllowNull(false)
     @Column(DataType.STRING)

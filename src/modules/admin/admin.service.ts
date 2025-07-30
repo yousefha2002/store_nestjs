@@ -9,6 +9,7 @@ import { Admin } from './entities/admin.entity';
 import { comparePassword, hashPassword } from 'src/common/utils/password';
 import { generateToken } from 'src/common/utils/generateToken';
 import { AdminPasswordDto } from './dto/admin-password.dto';
+import { RoleStatus } from 'src/common/enums/role_status';
 
 @Injectable()
 export class AdminService {
@@ -23,7 +24,7 @@ export class AdminService {
     }
     const passwordHashed = await hashPassword(password);
     const admin = await this.create(email, passwordHashed);
-    const payload = { adminId: admin.id };
+    const payload = { id: admin.id,role:RoleStatus.ADMIN };
     const access_token = generateToken(payload);
     return { admin: { id: admin.id, email: admin.email }, token: access_token };
   }
@@ -37,7 +38,7 @@ export class AdminService {
     if (!isMatch) {
       throw new BadRequestException('كلمة المرور خاطئة');
     }
-    const payload = { adminId: adminByEmail.id };
+    const payload = { id: adminByEmail.id,role:RoleStatus.ADMIN };
     const access_token = generateToken(payload);
     return {
       admin: { id: adminByEmail.id, email: adminByEmail.email },
