@@ -3,23 +3,31 @@ import {
     Column,
     Model,
     DataType,
-    AllowNull,
-    PrimaryKey,
     AutoIncrement,
+    PrimaryKey,
     ForeignKey,
+    AllowNull,
     BelongsTo,
-    HasMany,
+    Default,
 } from 'sequelize-typescript';
-import { Product } from 'src/modules/product/entities/product.entity';
-
+import { Customer } from 'src/modules/customer/entities/customer.entity';
 import { Store } from 'src/modules/store/entities/store.entity';
 
-@Table({ tableName: 'store_categories' })
-export class Category extends Model<Category> {
+
+@Table({ tableName: 'carts' })
+export class Cart extends Model<Cart> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
     id: number;
+
+    @ForeignKey(() => Customer)
+    @AllowNull(false)
+    @Column(DataType.INTEGER)
+    customerId: number;
+
+    @BelongsTo(() => Customer)
+    customer: Customer;
 
     @ForeignKey(() => Store)
     @AllowNull(false)
@@ -28,11 +36,4 @@ export class Category extends Model<Category> {
 
     @BelongsTo(() => Store)
     store: Store;
-
-    @AllowNull(false)
-    @Column(DataType.STRING)
-    title: string;
-
-    @HasMany(() => Product)
-    products: Product[];
 }

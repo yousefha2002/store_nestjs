@@ -3,19 +3,17 @@ import {
     Column,
     Model,
     DataType,
-    AllowNull,
-    PrimaryKey,
     AutoIncrement,
+    PrimaryKey,
     ForeignKey,
+    AllowNull,
     BelongsTo,
-    HasMany,
 } from 'sequelize-typescript';
-import { Product } from 'src/modules/product/entities/product.entity';
-
+import { DayOfWeek } from 'src/common/enums/day_of_week';
 import { Store } from 'src/modules/store/entities/store.entity';
 
-@Table({ tableName: 'store_categories' })
-export class Category extends Model<Category> {
+@Table({ tableName: 'opening_hours' })
+export class OpeningHour extends Model<OpeningHour> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
@@ -30,9 +28,14 @@ export class Category extends Model<Category> {
     store: Store;
 
     @AllowNull(false)
-    @Column(DataType.STRING)
-    title: string;
+    @Column(DataType.ENUM(...Object.values(DayOfWeek)))
+    day: DayOfWeek;
 
-    @HasMany(() => Product)
-    products: Product[];
+    @AllowNull(false)
+    @Column(DataType.TIME)
+    openTime: string;
+
+    @AllowNull(false)
+    @Column(DataType.TIME)
+    closeTime: string;
 }

@@ -1,3 +1,4 @@
+import { AdminEmailDto } from './dto/admin-email.dto';
 import {
   Body,
   Controller,
@@ -9,9 +10,8 @@ import { AdminService } from './admin.service';
 import { authAdminDto } from './dto/auth-admin.dto';
 import { AdminDto } from './dto/admin.dto';
 import { Serilaize } from 'src/common/interceptors/serialize.interceptor';
-import { UserEmailDto } from '../user/dto/user-email.dto';
 import { AdminGuard } from 'src/common/guards/admin.guard';
-import { UserPasswordDto } from '../user/dto/user-password.dto';
+import { AdminPasswordDto } from './dto/admin-password.dto';
 
 @Controller('admin')
 export class AdminController {
@@ -32,14 +32,14 @@ export class AdminController {
   @Serilaize(AdminDto)
   @Patch('email')
   @UseGuards(AdminGuard)
-  changeAdminEmail(@Body() body: UserEmailDto) {
+  changeAdminEmail(@Body() body: AdminEmailDto) {
     return this.adminService.changeEmail(body.newEmail);
   }
 
   @Serilaize(AdminDto)
   @Patch('password')
   @UseGuards(AdminGuard)
-  changeAdminPassword(@Body() body: UserPasswordDto) {
+  changeAdminPassword(@Body() body: AdminPasswordDto) {
     return this.adminService.changePassword(body);
   }
 }

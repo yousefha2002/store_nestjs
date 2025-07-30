@@ -3,36 +3,35 @@ import {
     Column,
     Model,
     DataType,
-    AllowNull,
-    PrimaryKey,
     AutoIncrement,
+    PrimaryKey,
+    AllowNull,
     ForeignKey,
     BelongsTo,
-    HasMany,
 } from 'sequelize-typescript';
 import { Product } from 'src/modules/product/entities/product.entity';
 
-import { Store } from 'src/modules/store/entities/store.entity';
 
-@Table({ tableName: 'store_categories' })
-export class Category extends Model<Category> {
+@Table({ tableName: 'product_extras' })
+export class ProductExtra extends Model<ProductExtra> {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
     id: number;
 
-    @ForeignKey(() => Store)
+    @ForeignKey(() => Product)
     @AllowNull(false)
     @Column(DataType.INTEGER)
-    storeId: number;
+    productId: number;
 
-    @BelongsTo(() => Store)
-    store: Store;
+    @BelongsTo(() => Product)
+    product: Product;
 
     @AllowNull(false)
     @Column(DataType.STRING)
-    title: string;
+    name: string;
 
-    @HasMany(() => Product)
-    products: Product[];
+    @AllowNull(false)
+    @Column(DataType.FLOAT)
+    price: number;
 }
