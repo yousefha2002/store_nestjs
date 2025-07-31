@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { repositories } from 'src/common/enums/repositories';
 import { OtpCode } from './entities/otp_code.entity';
 import { generateOtpCode } from 'src/common/utils/generateOtpCode';
+import { generateToken } from 'src/common/utils/generateToken';
 
 @Injectable()
 export class OtpCodeService {
@@ -16,5 +17,21 @@ export class OtpCodeService {
         // Example:
         // await this.smsService.send(phone, `Your verification code is ${code}`);
         return {message: 'OTP sent successfully',phone,code,};
+    }
+
+    async verifyOtp(phone: string, code: string)
+    {
+        const record = await this.otpCodeRepo.findOne({
+            where: { phone, code, isVerified: false },
+            order: [['createdAt', 'DESC']]
+        });
+        if (!record) {
+            throw new BadRequestException('Invalid code or already verified');
+        }
+        const token = generateToken({ phone });
+        record.isVerified = true;
+        record.token = token;
+        await record.save();
+        return { token , message:"success" };
     }
 }
