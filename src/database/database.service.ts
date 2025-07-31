@@ -77,7 +77,7 @@ export const databaseProviders = [
         WalletTransaction,
         Gift,
       ]);
-      await sequelize.sync({ force: true });
+      await sequelize.sync({ alter: false });
       return sequelize;
     },
   },
