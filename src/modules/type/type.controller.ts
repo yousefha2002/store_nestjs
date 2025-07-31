@@ -20,9 +20,9 @@ export class TypeController {
   constructor(private readonly typeService: TypeService) {}
 
   @Post('create')
+  @UseGuards(AdminGuard)
   @UseInterceptors(FileInterceptor('image', multerOptions))
   @UseFilters(MulterExceptionFilter)
-  @UseGuards(AdminGuard)
   createType(
     @Body() dto: CreateTypeDto,
     @UploadedFile() file?: Express.Multer.File,
