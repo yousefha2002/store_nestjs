@@ -51,9 +51,8 @@ export class TypeService {
     console.log(lang);
     const typeLang = await this.typeLangRepo.findOne({ where: { name } });
     if (typeLang) {
-      // throw new BadRequestException(`Type name ${name} is already used`);
-      const message = this.i18n.translate('translation.createdSuccefully', {
-        lang, // تمرير اللغة يدويًا
+      const message = this.i18n.translate('translation.find_type_message', {
+        lang,
       });
       throw new BadRequestException(message);
     }
