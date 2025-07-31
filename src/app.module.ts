@@ -28,40 +28,45 @@ import { OrderItemVariantModule } from './modules/order_item_variant/order_item_
 import { OrderItemInstructionModule } from './modules/order_item_instruction/order_item_instruction.module';
 import { AddressModule } from './modules/address/address.module';
 import { CarModule } from './modules/car/car.module';
-
+import { MulterConfigService } from './multer/multer.config';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-    imports: [
-        JwtModule.register({ global: true, secret: 'token' }),
-        DatabaseModule,
-        AdminModule,
-        AppModule,
-        CartModule,
-        CartItemModule,
-        CartItemExtraModule,
-        CartItemInstructionModule,
-        CartItemVariantModule,
-        CategoryModule,
-        CustomerModule,
-        OfferModule,
-        OpeningHourModule,
-        OtpCodeModule,
-        OwnerModule,
-        PickupMethodModule,
-        ProductModule,
-        ProductExtraModule,
-        ProductImageModule,
-        ProductInstructionModule,
-        ProuductVariantModule,
-        StoreModule,
-        TypeModule,
-        OrderModule,
-        OrderItemModule,
-        OrderItemExtraModule,
-        OrderItemVariantModule,
-        OrderItemInstructionModule,
-        AddressModule,
-        CarModule
-    ]
+  imports: [
+    JwtModule.register({ global: true, secret: 'token' }),
+    DatabaseModule,
+    AdminModule,
+    AppModule,
+    CartModule,
+    CartItemModule,
+    CartItemExtraModule,
+    CartItemInstructionModule,
+    CartItemVariantModule,
+    CategoryModule,
+    CustomerModule,
+    OfferModule,
+    OpeningHourModule,
+    OtpCodeModule,
+    OwnerModule,
+    PickupMethodModule,
+    ProductModule,
+    ProductExtraModule,
+    ProductImageModule,
+    ProductInstructionModule,
+    ProuductVariantModule,
+    StoreModule,
+    TypeModule,
+    OrderModule,
+    OrderItemModule,
+    OrderItemExtraModule,
+    OrderItemVariantModule,
+    OrderItemInstructionModule,
+    AddressModule,
+    CarModule,
+    MulterModule.registerAsync({
+      useClass: MulterConfigService,
+    }),
+  ],
+  providers: [MulterConfigService],
 })
 export class AppModule {}

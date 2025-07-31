@@ -59,7 +59,7 @@ export const databaseProviders = [
         TypeLanguage,
         Address,
       ]);
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ alter: false });
       return sequelize;
     },
   },
