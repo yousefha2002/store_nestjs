@@ -44,5 +44,6 @@ export class OtpCodeService {
         if (!otp) {
             throw new BadRequestException('Phone verification failed');
         }
+        return otp
     }
 }
