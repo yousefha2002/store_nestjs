@@ -6,6 +6,8 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 import { OtpCodeService } from '../otp_code/otp_code.service';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { presetAvatars } from 'src/common/constants/avatars';
+import { RoleStatus } from 'src/common/enums/role_status';
+import { generateToken } from 'src/common/utils/generateToken';
 
 @Injectable()
 export class CustomerService {
@@ -19,11 +21,11 @@ export class CustomerService {
     async createCustomer(body:CreateCustomerDto,file?:Express.Multer.File)
     {
         const {email,phone,token} = body
+        let otp = await this.otpCodeService.validateOtp(phone,token)
         const existing = await this.customerRepo.findOne({ where: { email} });
         if (existing) {
             throw new BadRequestException('Email is already taken');
         }
-        let otp = await this.otpCodeService.validateOtp(phone,token)
         
         // one of them shuold send
         if (body.avatarId && file) {
@@ -43,7 +45,7 @@ export class CustomerService {
         }
 
         if (body.avatarId) {
-            const avatar = this.avatarService.findById(body.avatarId)
+            const avatar = this.avatarService.findById(+body.avatarId)
             if (!avatar) {
                 throw new BadRequestException('Invalid avatar selected');
             }
@@ -59,6 +61,8 @@ export class CustomerService {
         });
         otp.isUsed = true;
         await otp.save();
-        return {customer,message: 'Customer created successfully'}
+        const payload = { id: customer.id,role:RoleStatus.CUSTOMER };
+        const access_token = generateToken(payload);
+        return {customer,message: 'Customer created successfully',token:access_token}
     }
 }

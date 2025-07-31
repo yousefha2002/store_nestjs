@@ -1,7 +1,9 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, IsNumber, MinLength, MaxLength } from 'class-validator';
 
 export class CreateCustomerDto {
     @IsNotEmpty()
+    @MinLength(3, { message: 'Name must be at least 3 characters' })
+    @MaxLength(20, { message: 'Name must be at most 20 characters' })
     @IsString()
     name: string;
 
@@ -18,6 +20,6 @@ export class CreateCustomerDto {
     token: string;
 
     @IsOptional()
-    @IsNumber()
-    avatarId?: number;
+    @IsString()
+    avatarId?: string;
 }
