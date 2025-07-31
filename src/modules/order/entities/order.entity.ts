@@ -65,4 +65,13 @@ export class Order extends Model<Order> {
 
     @HasMany(() => OrderItem)
     orderItems: OrderItem[];
+
+    @AllowNull(false)
+    @Default(0)
+    @Column(DataType.INTEGER)
+    pointsEarned: number;
+
+    @Default(false)
+    @Column(DataType.BOOLEAN)
+    refunded: boolean;
 }

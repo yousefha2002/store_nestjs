@@ -28,6 +28,9 @@ import { OrderItemVariantModule } from './modules/order_item_variant/order_item_
 import { OrderItemInstructionModule } from './modules/order_item_instruction/order_item_instruction.module';
 import { AddressModule } from './modules/address/address.module';
 import { CarModule } from './modules/car/car.module';
+import { WalletModule } from './modules/wallet/wallet.module';
+import { WalletTransactionModule } from './modules/wallet_transaction/wallet_transaction.module';
+import { GiftModule } from './modules/gift/gift.module';
 
 
 @Module({
@@ -61,7 +64,10 @@ import { CarModule } from './modules/car/car.module';
         OrderItemVariantModule,
         OrderItemInstructionModule,
         AddressModule,
-        CarModule
+        CarModule,
+        WalletModule,
+        WalletTransactionModule,
+        GiftModule
     ]
 })
 export class AppModule {}

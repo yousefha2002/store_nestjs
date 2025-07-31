@@ -21,6 +21,7 @@ import { Store } from 'src/modules/store/entities/store.entity';
 import { Type } from 'src/modules/type/entities/type.entity';
 import { TypeLanguage } from 'src/modules/type/entities/type_language.entity';
 import { Address } from 'src/modules/address/entities/address.entity';
+import { Car } from 'src/modules/car/entities/car.entity';
 
 export const databaseProviders = [
   {
@@ -37,7 +38,7 @@ export const databaseProviders = [
       });
       sequelize.addModels([
         Admin,Cart,CartItem,CartItemExtra,CartItemInstruction,CartItemVariant,Category,Customer,Offer,OpeningHour,OtpCode,Owner,
-        PickupMethod,Product,ProductExtra,ProductImage,ProductInstruction,ProductVariant,Store,Type,TypeLanguage,Address
+        PickupMethod,Product,ProductExtra,ProductImage,ProductInstruction,ProductVariant,Store,Type,TypeLanguage,Address,Car
       ]);
       await sequelize.sync({ alter: false });
       return sequelize;
