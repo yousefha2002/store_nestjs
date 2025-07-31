@@ -27,6 +27,7 @@ import { OrderItemExtraModule } from './modules/order_item_extra/order_item_extr
 import { OrderItemVariantModule } from './modules/order_item_variant/order_item_variant.module';
 import { OrderItemInstructionModule } from './modules/order_item_instruction/order_item_instruction.module';
 import { AddressModule } from './modules/address/address.module';
+import { CarModule } from './modules/car/car.module';
 
 
 @Module({
@@ -59,7 +60,8 @@ import { AddressModule } from './modules/address/address.module';
         OrderItemExtraModule,
         OrderItemVariantModule,
         OrderItemInstructionModule,
-        AddressModule
+        AddressModule,
+        CarModule
     ]
 })
 export class AppModule {}
