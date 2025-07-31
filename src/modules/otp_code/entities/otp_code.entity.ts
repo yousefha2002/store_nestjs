@@ -25,8 +25,12 @@ export class OtpCode extends Model<OtpCode> {
     code: string;
 
     @AllowNull(false)
-    @Column(DataType.DATE)
-    expiresAt: Date;
+    @Column(DataType.STRING)
+    token: string;
+
+    @Default(false)
+    @Column(DataType.BOOLEAN)
+    isVerified: boolean;
 
     @Default(false)
     @Column(DataType.BOOLEAN)

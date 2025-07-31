@@ -6,13 +6,9 @@ import {
     AllowNull,
     AutoIncrement,
     PrimaryKey,
-    Default,
     HasMany,
-    ForeignKey,
-    BelongsTo,
 } from 'sequelize-typescript';
 import { TypeLanguage } from './type_language.entity';
-import { Image } from 'src/modules/image/entities/image.entity';
 
 @Table({ tableName: 'types' }) 
 export class Type extends Model<Type> {
@@ -20,18 +16,14 @@ export class Type extends Model<Type> {
     @PrimaryKey
     @Column(DataType.INTEGER)
     id: number;
-
-    @ForeignKey(() => Image)
+    
     @AllowNull(true)
-    @Column(DataType.INTEGER)
-    iconId: number;
+    @Column(DataType.STRING)
+    iconUrl:string
 
-    @BelongsTo(() => Image)
-    icon: Image;
-
-    @Default(DataType.NOW)
-    @Column(DataType.DATE)
-    createdAt: Date;
+    @AllowNull(true)
+    @Column(DataType.STRING)
+    iconPublicId:string
 
     @HasMany(() => TypeLanguage)
     languages: TypeLanguage[];

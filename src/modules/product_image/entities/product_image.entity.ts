@@ -9,7 +9,6 @@ import {
     ForeignKey,
     BelongsTo,
 } from 'sequelize-typescript';
-import { Image } from 'src/modules/image/entities/image.entity';
 import { Product } from 'src/modules/product/entities/product.entity';
 
 
@@ -28,11 +27,11 @@ export class ProductImage extends Model<ProductImage> {
     @BelongsTo(() => Product)
     product: Product;
 
-    @ForeignKey(() => Image)
     @AllowNull(false)
-    @Column(DataType.INTEGER)
-    imageId: number;
+    @Column(DataType.STRING)
+    imageUrl:string
 
-    @BelongsTo(() => Image)
-    image: Image;
+    @AllowNull(false)
+    @Column(DataType.STRING)
+    imagePublicId:string
 }

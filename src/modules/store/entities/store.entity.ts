@@ -12,7 +12,6 @@ import {
 } from 'sequelize-typescript';
 
 import { StoreStatus } from 'src/common/enums/store_status';
-import { Image } from 'src/modules/image/entities/image.entity';
 import { Owner } from 'src/modules/owner/entities/owner.entity';
 import { Type } from 'src/modules/type/entities/type.entity';
 
@@ -59,21 +58,21 @@ export class Store extends Model<Store> {
     @Column(DataType.FLOAT)
     lng: number;
 
-    @ForeignKey(() => Image)
-    @AllowNull(true)
-    @Column(DataType.INTEGER)
-    logoId: number;
+    @AllowNull(false)
+    @Column(DataType.STRING)
+    logoUrl:string
 
-    @BelongsTo(() => Image, 'logoId')
-    logo: Image;
+    @AllowNull(false)
+    @Column(DataType.STRING)
+    logoPublicId:string
 
-    @ForeignKey(() => Image)
-    @AllowNull(true)
-    @Column(DataType.INTEGER)
-    coverId: number;
+    @AllowNull(false)
+    @Column(DataType.STRING)
+    coverUrl:string
 
-    @BelongsTo(() => Image, 'coverId')
-    cover: Image;
+    @AllowNull(false)
+    @Column(DataType.STRING)
+    coverPublicId:string
 
     @AllowNull(false)
     @Column(DataType.STRING)

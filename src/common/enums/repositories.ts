@@ -1,8 +1,8 @@
 export enum repositories {
     admin_repository = 'admin_repository',
     owner_repository = 'owner_repository',
-    storeType_repository = 'storeType_repository',
-    storeTypeLanguage_repository = 'storeTypeLanguage_repository',
+    type_repository = 'Type_repository',
+    typeLanguage_repository = 'typeLanguage_repository',
     store_repository = 'store_repository',
     category_repository = 'category_repository',
     product_repository = 'product_repository',
@@ -20,4 +20,5 @@ export enum repositories {
     cartItemVariant_repository = 'cartItemVariant_repository',
     cartItemExtra_repository = 'cartItemExtra_repository',
     cartItemInstruction_repository = 'cartItemInstruction_repository',
+    image_repository='image_repository'
 }

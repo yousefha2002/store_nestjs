@@ -67,10 +67,6 @@ export class Offer extends Model<Offer> {
     @Column(DataType.DATE)
     startDate: Date;
 
-    @AllowNull(false)
-    @Column(DataType.DATE)
-    endDate: Date;
-
     @HasMany(() => Product)
     products: Product[];
 }

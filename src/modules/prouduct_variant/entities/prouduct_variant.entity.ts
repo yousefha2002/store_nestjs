@@ -10,7 +10,6 @@ import {
     BelongsTo,
 } from 'sequelize-typescript';
 import { ProductVariantType } from 'src/common/enums/product_varaint_type';
-import { Image } from 'src/modules/image/entities/image.entity';
 import { Product } from 'src/modules/product/entities/product.entity';
 
 
@@ -41,11 +40,11 @@ export class ProductVariant extends Model<ProductVariant> {
     @Column(DataType.FLOAT)
     priceDiff: number;
 
-    @ForeignKey(() => Image)
-    @AllowNull(false)
-    @Column(DataType.INTEGER)
-    imageId: number;
-    
-    @BelongsTo(() => Image)
-    image: Image;
+    @AllowNull(true)
+    @Column(DataType.STRING)
+    imageUrl:string
+
+    @AllowNull(true)
+    @Column(DataType.STRING)
+    imagePublicId:string
 }

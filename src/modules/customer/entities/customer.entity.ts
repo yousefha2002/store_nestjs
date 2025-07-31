@@ -6,10 +6,9 @@ import {
     AutoIncrement,
     PrimaryKey,
     AllowNull,
-    BelongsTo,
-    ForeignKey,
+    HasMany,
 } from 'sequelize-typescript';
-import { Image } from 'src/modules/image/entities/image.entity';
+import { Address } from 'src/modules/address/entities/address.entity';
 
 @Table({ tableName: 'customers' })
 export class Customer extends Model<Customer> {
@@ -18,6 +17,7 @@ export class Customer extends Model<Customer> {
     @Column(DataType.INTEGER)
     id: number;
 
+    @AllowNull(false)
     @Column(DataType.STRING)
     phone: string;
 
@@ -25,15 +25,26 @@ export class Customer extends Model<Customer> {
     @Column(DataType.STRING)
     name: string;
 
-    @AllowNull(true)
+    @AllowNull(false)
     @Column(DataType.STRING)
     email: string;
 
-    @ForeignKey(() => Image)
-    @AllowNull(false)
-    @Column(DataType.INTEGER)
-    imageId: number;
+    @AllowNull(true)
+    @Column(DataType.STRING)
+    imageUrl:string
 
-    @BelongsTo(() => Image)
-    image: Image;
+    @AllowNull(true)
+    @Column(DataType.STRING)
+    imagePublicId:string
+
+    @AllowNull(true)
+    @Column(DataType.STRING)
+    avatarUrl:string
+
+    @AllowNull(true)
+    @Column(DataType.STRING)
+    avatarPublicId:string
+
+    @HasMany(() => Address)
+    addresses: Address[];
 }

@@ -19,7 +19,6 @@ import { ProductInstruction } from 'src/modules/product_instruction/entities/pro
 import { ProductVariant } from 'src/modules/prouduct_variant/entities/prouduct_variant.entity';
 import { Store } from 'src/modules/store/entities/store.entity';
 import { Type } from 'src/modules/type/entities/type.entity';
-import { Image } from 'src/modules/image/entities/image.entity';
 import { TypeLanguage } from 'src/modules/type/entities/type_language.entity';
 
 export const databaseProviders = [
@@ -37,7 +36,7 @@ export const databaseProviders = [
       });
       sequelize.addModels([
         Admin,Cart,CartItem,CartItemExtra,CartItemInstruction,CartItemVariant,Category,Customer,Offer,OpeningHour,OtpCode,Owner,
-        PickupMethod,Product,ProductExtra,ProductImage,ProductInstruction,ProductVariant,Store,Type,Image,TypeLanguage
+        PickupMethod,Product,ProductExtra,ProductImage,ProductInstruction,ProductVariant,Store,Type,TypeLanguage
       ]);
       await sequelize.sync({ alter: false });
       return sequelize;

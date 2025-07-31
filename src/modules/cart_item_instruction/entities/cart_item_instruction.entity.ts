@@ -10,6 +10,7 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { CartItem } from 'src/modules/cart_item/entities/cart_item.entity';
+import { ProductInstruction } from 'src/modules/product_instruction/entities/product_instruction.entity';
 
 
 @Table({ tableName: 'cart_item_instructions' })
@@ -27,7 +28,11 @@ export class CartItemInstruction extends Model<CartItemInstruction> {
     @BelongsTo(() => CartItem)
     cartItem: CartItem;
 
+    @ForeignKey(() => ProductInstruction)
     @AllowNull(false)
-    @Column(DataType.STRING)
-    text: string;
+    @Column(DataType.INTEGER)
+    productInstructionId: number;
+    
+    @BelongsTo(() => ProductInstruction)
+    productInstruction: ProductInstruction;
 }
