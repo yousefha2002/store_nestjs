@@ -113,6 +113,7 @@ export class TypeService {
     }
   }
 
+  // if needed but not recommended
   async deleteType(id: number) {
     const type = await this.typeRepo.findByPk(id);
     if (!type) throw new NotFoundException(`Type with id ${id} not found`);

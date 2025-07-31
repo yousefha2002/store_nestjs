@@ -31,11 +31,11 @@ export class OpeningHour extends Model{
     @Column(DataType.ENUM(...Object.values(DayOfWeek)))
     day: DayOfWeek;
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column(DataType.TIME)
     openTime: string;
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column(DataType.TIME)
     closeTime: string;
 }

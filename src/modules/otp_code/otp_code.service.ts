@@ -11,8 +11,13 @@ export class OtpCodeService {
     ){}
 
     async sendOtp(phone: string) {
+        const existingOtp = await this.otpCodeRepo.findOne({where:{phone,isUsed:true}})
+        if(existingOtp)
+        {
+            throw new BadRequestException('OTP already sent. Please use the existing one or wait.');
+        }
         const code = generateOtpCode();
-        await this.otpCodeRepo.create({phone,code});
+        await this.otpCodeRepo.create({phone,code,isUsed:false});
         // TODO: Send code via SMS here
         // Example:
         // await this.smsService.send(phone, `Your verification code is ${code}`);
@@ -44,5 +49,6 @@ export class OtpCodeService {
         if (!otp) {
             throw new BadRequestException('Phone verification failed');
         }
+        return otp
     }
 }

@@ -5,6 +5,7 @@ import { presetAvatars } from 'src/common/constants/avatars';
 @Controller('avatar')
 export class AvatarController {
   constructor(private readonly avatarService: AvatarService) {}
+  
   @Get()
   getAvatars() {
     return presetAvatars;
