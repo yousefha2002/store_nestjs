@@ -22,6 +22,14 @@ import { Type } from 'src/modules/type/entities/type.entity';
 import { TypeLanguage } from 'src/modules/type/entities/type_language.entity';
 import { Address } from 'src/modules/address/entities/address.entity';
 import { Car } from 'src/modules/car/entities/car.entity';
+import { Wallet } from 'src/modules/wallet/entities/wallet.entity';
+import { WalletTransaction } from 'src/modules/wallet_transaction/entities/wallet_transaction.entity';
+import { Order } from 'src/modules/order/entities/order.entity';
+import { OrderItem } from 'src/modules/order_item/entities/order_item.entity';
+import { OrderItemExtra } from 'src/modules/order_item_extra/entities/order_item_extra.entity';
+import { OrderItemVariant } from 'src/modules/order_item_variant/entities/order_item_variant.entity';
+import { OrderItemInstruction } from 'src/modules/order_item_instruction/entities/order_item_instruction.entity';
+import { Gift } from 'src/modules/gift/entities/gift.entity';
 
 export const databaseProviders = [
   {
@@ -37,10 +45,6 @@ export const databaseProviders = [
         database: 'store_db',
       });
       sequelize.addModels([
-<<<<<<< HEAD
-        Admin,Cart,CartItem,CartItemExtra,CartItemInstruction,CartItemVariant,Category,Customer,Offer,OpeningHour,OtpCode,Owner,
-        PickupMethod,Product,ProductExtra,ProductImage,ProductInstruction,ProductVariant,Store,Type,TypeLanguage,Address,Car
-=======
         Admin,
         Cart,
         CartItem,
@@ -50,6 +54,11 @@ export const databaseProviders = [
         Category,
         Customer,
         Offer,
+        Order,
+        OrderItem,
+        OrderItemExtra,
+        OrderItemVariant,
+        OrderItemInstruction,
         OpeningHour,
         OtpCode,
         Owner,
@@ -63,9 +72,12 @@ export const databaseProviders = [
         Type,
         TypeLanguage,
         Address,
->>>>>>> 112375510d355e31442bad6d8ee1b7fb913b79dc
+        Car,
+        Wallet,
+        WalletTransaction,
+        Gift,
       ]);
-      await sequelize.sync({ alter: false });
+      await sequelize.sync({ force: true });
       return sequelize;
     },
   },
