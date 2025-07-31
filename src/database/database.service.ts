@@ -30,15 +30,34 @@ export const databaseProviders = [
         host: 'localhost',
         port: 3306,
         username: 'root',
-        password: '2838293yo',
-        // password: '059283805928388',
+        // password: '2838293yo',
+        password: '059283805928388',
         database: 'store_db',
       });
       sequelize.addModels([
-        Admin,Cart,CartItem,CartItemExtra,CartItemInstruction,CartItemVariant,Category,Customer,Offer,OpeningHour,OtpCode,Owner,
-        PickupMethod,Product,ProductExtra,ProductImage,ProductInstruction,ProductVariant,Store,Type,TypeLanguage
+        Admin,
+        Cart,
+        CartItem,
+        CartItemExtra,
+        CartItemInstruction,
+        CartItemVariant,
+        Category,
+        Customer,
+        Offer,
+        OpeningHour,
+        OtpCode,
+        Owner,
+        PickupMethod,
+        Product,
+        ProductExtra,
+        ProductImage,
+        ProductInstruction,
+        ProductVariant,
+        Store,
+        Type,
+        TypeLanguage,
       ]);
-      await sequelize.sync({ alter: false });
+      await sequelize.sync({ alter: true });
       return sequelize;
     },
   },
