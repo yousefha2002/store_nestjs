@@ -28,6 +28,7 @@ import { OrderItemVariantModule } from './modules/order_item_variant/order_item_
 import { OrderItemInstructionModule } from './modules/order_item_instruction/order_item_instruction.module';
 import { AddressModule } from './modules/address/address.module';
 import { CarModule } from './modules/car/car.module';
+<<<<<<< HEAD
 import { WalletModule } from './modules/wallet/wallet.module';
 import { WalletTransactionModule } from './modules/wallet_transaction/wallet_transaction.module';
 import { GiftModule } from './modules/gift/gift.module';
@@ -69,5 +70,47 @@ import { GiftModule } from './modules/gift/gift.module';
         WalletTransactionModule,
         GiftModule
     ]
+=======
+import { MulterConfigService } from './multer/multer.config';
+import { MulterModule } from '@nestjs/platform-express';
+
+@Module({
+  imports: [
+    JwtModule.register({ global: true, secret: 'token' }),
+    DatabaseModule,
+    AdminModule,
+    AppModule,
+    CartModule,
+    CartItemModule,
+    CartItemExtraModule,
+    CartItemInstructionModule,
+    CartItemVariantModule,
+    CategoryModule,
+    CustomerModule,
+    OfferModule,
+    OpeningHourModule,
+    OtpCodeModule,
+    OwnerModule,
+    PickupMethodModule,
+    ProductModule,
+    ProductExtraModule,
+    ProductImageModule,
+    ProductInstructionModule,
+    ProuductVariantModule,
+    StoreModule,
+    TypeModule,
+    OrderModule,
+    OrderItemModule,
+    OrderItemExtraModule,
+    OrderItemVariantModule,
+    OrderItemInstructionModule,
+    AddressModule,
+    CarModule,
+    MulterModule.registerAsync({
+      useClass: MulterConfigService,
+    }),
+  ],
+  providers: [MulterConfigService],
+>>>>>>> 112375510d355e31442bad6d8ee1b7fb913b79dc
 })
 export class AppModule {}
