@@ -16,7 +16,7 @@ import { Owner } from 'src/modules/owner/entities/owner.entity';
 import { Type } from 'src/modules/type/entities/type.entity';
 
 @Table({ tableName: 'stores' })
-export class Store extends Model<Store> {
+export class Store extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

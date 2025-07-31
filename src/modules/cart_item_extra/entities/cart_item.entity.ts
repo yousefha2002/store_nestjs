@@ -14,7 +14,7 @@ import { ProductExtra } from 'src/modules/product_extra/entities/product_extra.e
 
 
 @Table({ tableName: 'cart_item_extras' })
-export class CartItemExtra extends Model<CartItemExtra> {
+export class CartItemExtra extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

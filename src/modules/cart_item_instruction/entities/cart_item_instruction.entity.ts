@@ -14,7 +14,7 @@ import { ProductInstruction } from 'src/modules/product_instruction/entities/pro
 
 
 @Table({ tableName: 'cart_item_instructions' })
-export class CartItemInstruction extends Model<CartItemInstruction> {
+export class CartItemInstruction extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

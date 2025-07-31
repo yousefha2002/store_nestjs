@@ -15,7 +15,7 @@ import { Store } from 'src/modules/store/entities/store.entity';
 
 
 @Table({ tableName: 'carts' })
-export class Cart extends Model<Cart> {
+export class Cart extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

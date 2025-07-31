@@ -19,7 +19,7 @@ import { OrderItem } from 'src/modules/order_item/entities/order_item.entity';
 import { Store } from 'src/modules/store/entities/store.entity';
 
 @Table({ tableName: 'orders' })
-export class Order extends Model<Order> {
+export class Order extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

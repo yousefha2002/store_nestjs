@@ -11,7 +11,7 @@ import {
 import { Customer } from 'src/modules/customer/entities/customer.entity';
 
 @Table({ tableName: 'wallets' })
-export class Wallet extends Model<Wallet> {
+export class Wallet extends Model{
     @PrimaryKey
     @ForeignKey(() => Customer)
     @Column(DataType.INTEGER)

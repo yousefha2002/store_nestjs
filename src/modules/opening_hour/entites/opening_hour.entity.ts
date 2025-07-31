@@ -13,7 +13,7 @@ import { DayOfWeek } from 'src/common/enums/day_of_week';
 import { Store } from 'src/modules/store/entities/store.entity';
 
 @Table({ tableName: 'opening_hours' })
-export class OpeningHour extends Model<OpeningHour> {
+export class OpeningHour extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

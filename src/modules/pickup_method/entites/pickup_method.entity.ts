@@ -14,7 +14,7 @@ import { PickupMethodEnum } from 'src/common/enums/pickedup_method';
 import { Store } from 'src/modules/store/entities/store.entity';
 
 @Table({ tableName: 'pickup_methods' })
-export class PickupMethod extends Model<PickupMethod> {
+export class PickupMethod extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

@@ -14,7 +14,7 @@ import { Type } from './type.entity';
 import { Language } from 'src/common/enums/language';
 
 @Table({ tableName: 'type_languages' })
-export class TypeLanguage extends Model<TypeLanguage> {
+export class TypeLanguage extends Model {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

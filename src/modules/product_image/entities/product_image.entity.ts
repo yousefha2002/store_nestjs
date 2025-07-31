@@ -13,7 +13,7 @@ import { Product } from 'src/modules/product/entities/product.entity';
 
 
 @Table({ tableName: 'product_images' })
-export class ProductImage extends Model<ProductImage> {
+export class ProductImage extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

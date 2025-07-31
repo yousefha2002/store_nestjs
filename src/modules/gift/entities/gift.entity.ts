@@ -13,7 +13,7 @@ import { GiftType } from 'src/common/enums/gift_type';
 import { Customer } from 'src/modules/customer/entities/customer.entity';
 
 @Table({ tableName: 'gifts' })
-export class Gift extends Model<Gift> {
+export class Gift extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

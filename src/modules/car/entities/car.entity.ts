@@ -14,7 +14,7 @@ import {
 import { Customer } from 'src/modules/customer/entities/customer.entity';
 
 @Table({ tableName: 'carts' })
-export class Car extends Model<Car> {
+export class Car extends Model {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

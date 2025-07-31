@@ -17,7 +17,7 @@ import { Gift } from 'src/modules/gift/entities/gift.entity';
 import { WalletTransactionType } from 'src/common/enums/wallet_transaction_type';
 
 @Table({ tableName: 'wallet_transactions' })
-export class WalletTransaction extends Model<WalletTransaction> {
+export class WalletTransaction extends Model {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

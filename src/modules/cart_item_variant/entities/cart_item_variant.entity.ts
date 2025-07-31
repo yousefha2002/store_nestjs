@@ -14,7 +14,7 @@ import { ProductVariant } from 'src/modules/prouduct_variant/entities/prouduct_v
 
 
 @Table({ tableName: 'cart_item_variants' })
-export class CartItemVariant extends Model<CartItemVariant> {
+export class CartItemVariant extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

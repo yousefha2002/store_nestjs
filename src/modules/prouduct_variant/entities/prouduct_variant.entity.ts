@@ -14,7 +14,7 @@ import { Product } from 'src/modules/product/entities/product.entity';
 
 
 @Table({ tableName: 'product_variants' })
-export class ProductVariant extends Model<ProductVariant> {
+export class ProductVariant extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

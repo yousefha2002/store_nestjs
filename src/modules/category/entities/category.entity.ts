@@ -15,7 +15,7 @@ import { Product } from 'src/modules/product/entities/product.entity';
 import { Store } from 'src/modules/store/entities/store.entity';
 
 @Table({ tableName: 'store_categories' })
-export class Category extends Model<Category> {
+export class Category extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

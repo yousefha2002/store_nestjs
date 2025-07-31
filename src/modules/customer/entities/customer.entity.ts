@@ -12,7 +12,7 @@ import { Address } from 'src/modules/address/entities/address.entity';
 import { Car } from 'src/modules/car/entities/car.entity';
 
 @Table({ tableName: 'customers' })
-export class Customer extends Model<Customer> {
+export class Customer extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

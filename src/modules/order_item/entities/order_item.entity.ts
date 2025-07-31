@@ -18,7 +18,7 @@ import { OrderItemInstruction } from 'src/modules/order_item_instruction/entitie
 import { OrderItemVariant } from 'src/modules/order_item_variant/entities/order_item_variant.entity';
 
 @Table({ tableName: 'order_items' })
-    export class OrderItem extends Model<OrderItem> {
+    export class OrderItem extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

@@ -10,7 +10,7 @@ import {
 } from 'sequelize-typescript';
 
 @Table({ tableName: 'otp_codes' })
-export class OtpCode extends Model<OtpCode> {
+export class OtpCode extends Model {
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
@@ -24,7 +24,7 @@ export class OtpCode extends Model<OtpCode> {
     @Column(DataType.STRING)
     code: string;
 
-    @AllowNull(false)
+    @AllowNull(true)
     @Column(DataType.STRING)
     token: string;
 

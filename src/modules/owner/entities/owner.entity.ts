@@ -1,7 +1,7 @@
 import {Table,Column,Model,DataType,AllowNull,Default,PrimaryKey,AutoIncrement,} from 'sequelize-typescript';
 
 @Table({ tableName: 'owners' })
-export class Owner extends Model<Owner> {
+export class Owner extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)

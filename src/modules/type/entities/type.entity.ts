@@ -11,7 +11,7 @@ import {
 import { TypeLanguage } from './type_language.entity';
 
 @Table({ tableName: 'types' }) 
-export class Type extends Model<Type> {
+export class Type extends Model{
     @AutoIncrement
     @PrimaryKey
     @Column(DataType.INTEGER)
