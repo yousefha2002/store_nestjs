@@ -7,7 +7,7 @@ import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 
 @Module({
   controllers: [TypeController],
-  providers: [TypeService, ...TypeProvider, ...TypeLanguageProvider],
+  providers: [TypeService, ...TypeProvider],
   imports: [CloudinaryModule],
 })
 export class TypeModule {}
