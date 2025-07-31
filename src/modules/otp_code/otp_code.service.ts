@@ -34,4 +34,15 @@ export class OtpCodeService {
         await record.save();
         return { token , message:"success" };
     }
+
+    async validateOtp(phone:string,token:string)
+    {
+        const otp = await this.otpCodeRepo.findOne({
+            where: { phone,token,isVerified: true, isUsed: false },
+            order: [['createdAt', 'DESC']],
+        });
+        if (!otp) {
+            throw new BadRequestException('Phone verification failed');
+        }
+    }
 }

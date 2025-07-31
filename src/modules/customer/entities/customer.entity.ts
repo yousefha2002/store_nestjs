@@ -39,12 +39,8 @@ export class Customer extends Model{
     imagePublicId:string
 
     @AllowNull(true)
-    @Column(DataType.STRING)
-    avatarUrl:string
-
-    @AllowNull(true)
-    @Column(DataType.STRING)
-    avatarPublicId:string
+    @Column(DataType.INTEGER)
+    avatarId:number
 
     @HasMany(() => Address)
     addresses: Address[];
