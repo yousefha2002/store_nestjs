@@ -45,10 +45,7 @@ export class CustomerService {
         }
 
         if (body.avatarId) {
-            const avatar = this.avatarService.findById(+body.avatarId)
-            if (!avatar) {
-                throw new BadRequestException('Invalid avatar selected');
-            }
+            const avatar = await this.avatarService.findById(+body.avatarId)
             avatarId = avatar.id;
         }
         const customer = await this.customerRepo.create({

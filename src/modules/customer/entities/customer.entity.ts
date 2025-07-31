@@ -7,8 +7,11 @@ import {
     PrimaryKey,
     AllowNull,
     HasMany,
+    ForeignKey,
+    BelongsTo,
 } from 'sequelize-typescript';
 import { Address } from 'src/modules/address/entities/address.entity';
+import { Avatar } from 'src/modules/avatar/entities/avatar.entity';
 import { Car } from 'src/modules/car/entities/car.entity';
 
 @Table({ tableName: 'customers' })
@@ -38,9 +41,14 @@ export class Customer extends Model{
     @Column(DataType.STRING)
     imagePublicId:string
 
+
+    @ForeignKey(() => Avatar)
     @AllowNull(true)
     @Column(DataType.INTEGER)
     avatarId:number
+    
+    @BelongsTo(() => Avatar)
+    avatar: Avatar;
 
     @HasMany(() => Address)
     addresses: Address[];

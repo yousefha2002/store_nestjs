@@ -1,3 +1,4 @@
+import { AdminService } from './../../modules/admin/admin.service';
 import {
   Injectable,
   CanActivate,
@@ -9,7 +10,10 @@ import { RoleStatus } from '../enums/role_status';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private adminService:AdminService
+) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -28,9 +32,11 @@ export class AdminGuard implements CanActivate {
         throw new UnauthorizedException('Unauthorized role');
       }
 
-      console.log(decoded);
-
-      request.currentUser = decoded;
+      const admin = await this.adminService.findOneById(decoded.id);
+        if (!admin) {
+            throw new UnauthorizedException('Admin not found');
+        }
+      request.currentUser = admin;
       return !!decoded.id;
     } catch {
       throw new UnauthorizedException('Invalid or expired token');

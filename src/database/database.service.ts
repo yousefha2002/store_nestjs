@@ -30,6 +30,7 @@ import { OrderItemExtra } from 'src/modules/order_item_extra/entities/order_item
 import { OrderItemVariant } from 'src/modules/order_item_variant/entities/order_item_variant.entity';
 import { OrderItemInstruction } from 'src/modules/order_item_instruction/entities/order_item_instruction.entity';
 import { Gift } from 'src/modules/gift/entities/gift.entity';
+import { Avatar } from 'src/modules/avatar/entities/avatar.entity';
 
 export const databaseProviders = [
   {
@@ -76,8 +77,9 @@ export const databaseProviders = [
         Wallet,
         WalletTransaction,
         Gift,
+        Avatar
       ]);
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ alter: false });
       return sequelize;
     },
   },
