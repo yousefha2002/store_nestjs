@@ -34,6 +34,7 @@ import { GiftModule } from './modules/gift/gift.module';
 
 import { MulterConfigService } from './multer/multer.config';
 import { MulterModule } from '@nestjs/platform-express';
+import { AvatarModule } from './modules/avatar/avatar.module';
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { MulterModule } from '@nestjs/platform-express';
     MulterModule.registerAsync({
       useClass: MulterConfigService,
     }),
+    AvatarModule,
   ],
   providers: [MulterConfigService],
 })

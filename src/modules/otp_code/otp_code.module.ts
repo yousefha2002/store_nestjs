@@ -6,5 +6,6 @@ import { OptCodeProvider } from './providers/opt_code.provider';
 @Module({
   controllers: [OtpCodeController],
   providers: [OtpCodeService,...OptCodeProvider],
+  exports:[OtpCodeService]
 })
 export class OtpCodeModule {}
