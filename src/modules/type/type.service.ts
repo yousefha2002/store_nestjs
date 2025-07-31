@@ -10,6 +10,7 @@ import { CreateTypeDto } from './dto/create-type.dto';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { TypeLanguage } from './entities/type_language.entity';
 import { Language } from 'src/common/enums/language';
+import { I18nContext, I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class TypeService {
@@ -18,12 +19,17 @@ export class TypeService {
     @Inject(repositories.typeLanguage_repository)
     private typeLangRepo: typeof TypeLanguage,
     private readonly cloudinaryService: CloudinaryService,
+    private readonly i18n: I18nService,
   ) {}
 
-  async createType(dto: CreateTypeDto, file: Express.Multer.File) {
+  async createType(
+    dto: CreateTypeDto,
+    file: Express.Multer.File,
+    lang: string,
+  ) {
     const [] = await Promise.all([
-      this.checkTypeLanguage(dto.nameEn),
-      this.checkTypeLanguage(dto.nameAr),
+      this.checkTypeLanguage(dto.nameEn, lang),
+      this.checkTypeLanguage(dto.nameAr, lang),
     ]);
     const result = await this.cloudinaryService.uploadImage(file);
     const createdData = {
@@ -35,13 +41,21 @@ export class TypeService {
       this.createTypeLang(dto.nameEn, Language.en, typeCreated.id),
       this.createTypeLang(dto.nameAr, Language.ar, typeCreated.id),
     ]);
-    return { message: 'type created succesfully' };
+    const message = this.i18n.translate('translation.createdSuccefully', {
+      lang, // تمرير اللغة يدويًا
+    });
+    return { message };
   }
 
-  async checkTypeLanguage(name: string) {
+  async checkTypeLanguage(name: string, lang: string) {
+    console.log(lang);
     const typeLang = await this.typeLangRepo.findOne({ where: { name } });
     if (typeLang) {
-      throw new BadRequestException(`Type name ${name} is already used`);
+      // throw new BadRequestException(`Type name ${name} is already used`);
+      const message = this.i18n.translate('translation.createdSuccefully', {
+        lang, // تمرير اللغة يدويًا
+      });
+      throw new BadRequestException(message);
     }
   }
 

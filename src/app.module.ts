@@ -35,9 +35,22 @@ import { GiftModule } from './modules/gift/gift.module';
 import { MulterConfigService } from './multer/multer.config';
 import { MulterModule } from '@nestjs/platform-express';
 import { AvatarModule } from './modules/avatar/avatar.module';
+import { I18nModule, QueryResolver, HeaderResolver } from 'nestjs-i18n';
+import * as path from 'path';
 
 @Module({
   imports: [
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.resolve(process.cwd(), 'src/i18n'),
+        watch: false,
+      },
+      resolvers: [
+        { use: QueryResolver, options: ['lang', 'locale'] }, // يدعم lang=en أو lang=ar في URL
+        new HeaderResolver(['accept-language']), // أو من الهيدر
+      ],
+    }),
     JwtModule.register({ global: true, secret: 'token' }),
     DatabaseModule,
     AdminModule,
