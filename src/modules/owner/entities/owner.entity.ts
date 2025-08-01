@@ -12,7 +12,7 @@ export class Owner extends Model{
     name: string;
 
     @AllowNull(false)
-    @Column(DataType.STRING)
+    @Column({type:DataType.STRING,unique:true})
     phone: string;
 
     @AllowNull(false)

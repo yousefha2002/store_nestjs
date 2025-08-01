@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { repositories } from 'src/common/enums/repositories';
 import { CarBrand } from './entities/car_brand.entity';
 import { UpdateCarBrandDto } from './dto/update_car_brand.dto';
@@ -13,7 +13,7 @@ export class CarBrandService {
     async create(dto: CreateCarBrandDto) {
         const exists = await this.carBrandRep.findOne({ where: { name: dto.name } });
         if (exists) {
-            throw new Error('Car brand with this name already exists');
+            throw new BadRequestException('Car brand with this name already exists');
         }
         return this.carBrandRep.create({ ...dto });
     }
@@ -21,14 +21,17 @@ export class CarBrandService {
     async update(id: number, dto: UpdateCarBrandDto) 
     {
         const brand = await this.getOneOrFail(id);
-        if (dto.name && dto.name !== brand.name) {
-            const exists = await this.carBrandRep.findOne({ where: { name: dto.name } });
-            if (exists) {
-            throw new Error('Car brand with this name already exists');
+        if (dto.name === brand.name) {
+            return brand;
+        }
+        if (dto.name) {
+            const exists = await this.carBrandRep.findOne({where: { name: dto.name }});
+            if (exists && exists.id !== id) {
+                throw new BadRequestException('Car brand with this name already exists');
             }
         }
         return brand.update(dto);
-}
+    }
 
     async getAll() {
         return this.carBrandRep.findAll();

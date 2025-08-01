@@ -75,7 +75,7 @@ export class Store extends Model{
     coverPublicId:string
 
     @AllowNull(false)
-    @Column(DataType.STRING)
+    @Column({type:DataType.STRING,unique:true})
     phone: string;
 
     @Default(StoreStatus.PENDING)
