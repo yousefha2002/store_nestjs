@@ -9,7 +9,9 @@ import {
     AllowNull,
     BelongsTo,
     Default,
+    HasMany,
 } from 'sequelize-typescript';
+import { CartItem } from 'src/modules/cart_item/entities/cart_item.entity';
 import { Customer } from 'src/modules/customer/entities/customer.entity';
 import { Store } from 'src/modules/store/entities/store.entity';
 
@@ -36,4 +38,7 @@ export class Cart extends Model{
 
     @BelongsTo(() => Store)
     store: Store;
+
+    @HasMany(() => CartItem)
+    cartItems: CartItem[];
 }

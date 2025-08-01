@@ -16,6 +16,7 @@ import { Order } from 'src/modules/order/entities/order.entity';
 import { OrderItemExtra } from 'src/modules/order_item_extra/entities/order_item_extra.entity';
 import { OrderItemInstruction } from 'src/modules/order_item_instruction/entities/order_item_instruction.entity';
 import { OrderItemVariant } from 'src/modules/order_item_variant/entities/order_item_variant.entity';
+import { Product } from 'src/modules/product/entities/product.entity';
 
 @Table({ tableName: 'order_items' })
     export class OrderItem extends Model{
@@ -32,9 +33,12 @@ import { OrderItemVariant } from 'src/modules/order_item_variant/entities/order_
     @BelongsTo(() => Order)
     order: Order;
 
-    @AllowNull(false)
+    @ForeignKey(() => Product)
     @Column(DataType.INTEGER)
     productId: number;
+
+    @BelongsTo(() => Product)
+    product: Product;
 
     @AllowNull(false)
     @Column(DataType.STRING)

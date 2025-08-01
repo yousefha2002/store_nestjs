@@ -6,7 +6,9 @@ import {
     AutoIncrement,
     PrimaryKey,
     AllowNull,
+    HasMany,
 } from 'sequelize-typescript';
+import { Car } from 'src/modules/car/entities/car.entity';
 
 @Table({ tableName: 'car_colors' ,timestamps: false})
 export class CarColor extends Model {
@@ -18,4 +20,7 @@ export class CarColor extends Model {
     @AllowNull(false)
     @Column(DataType.STRING)
     name: string;
+
+    @HasMany(() => Car)
+    cars: Car[];
 }
