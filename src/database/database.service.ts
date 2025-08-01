@@ -22,7 +22,6 @@ import { Type } from 'src/modules/type/entities/type.entity';
 import { TypeLanguage } from 'src/modules/type/entities/type_language.entity';
 import { Address } from 'src/modules/address/entities/address.entity';
 import { Car } from 'src/modules/car/entities/car.entity';
-import { Wallet } from 'src/modules/wallet/entities/wallet.entity';
 import { WalletTransaction } from 'src/modules/wallet_transaction/entities/wallet_transaction.entity';
 import { Order } from 'src/modules/order/entities/order.entity';
 import { OrderItem } from 'src/modules/order_item/entities/order_item.entity';
@@ -30,6 +29,11 @@ import { OrderItemExtra } from 'src/modules/order_item_extra/entities/order_item
 import { OrderItemVariant } from 'src/modules/order_item_variant/entities/order_item_variant.entity';
 import { OrderItemInstruction } from 'src/modules/order_item_instruction/entities/order_item_instruction.entity';
 import { Gift } from 'src/modules/gift/entities/gift.entity';
+import { Avatar } from 'src/modules/avatar/entities/avatar.entity';
+import { CarType } from 'src/modules/car_type/entites/car_type.entity';
+import { CarColor } from 'src/modules/car_color/entities/car_color.entity';
+import { CarBrand } from 'src/modules/car_brand/entities/car_brand.entity';
+import { CarModel } from 'src/modules/car_model/entites/car_model.entity';
 
 export const databaseProviders = [
   {
@@ -40,8 +44,8 @@ export const databaseProviders = [
         host: 'localhost',
         port: 3306,
         username: 'root',
-        // password: '2838293yo',
-        password: '059283805928388',
+        password: '2838293yo',
+        // password: '059283805928388',
         database: 'store_db',
       });
       sequelize.addModels([
@@ -73,9 +77,13 @@ export const databaseProviders = [
         TypeLanguage,
         Address,
         Car,
-        Wallet,
         WalletTransaction,
         Gift,
+        Avatar,
+        CarType,
+        CarColor,
+        CarBrand,
+        CarModel
       ]);
       await sequelize.sync({ alter: false });
       return sequelize;

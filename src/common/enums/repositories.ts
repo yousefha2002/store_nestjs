@@ -20,5 +20,9 @@ export enum repositories {
     cartItemVariant_repository = 'cartItemVariant_repository',
     cartItemExtra_repository = 'cartItemExtra_repository',
     cartItemInstruction_repository = 'cartItemInstruction_repository',
-    image_repository='image_repository'
+    avatar_repository='avatar_repository',
+    car_color_repository='car_color_repository',
+    car_model_repository='car_model_repository',
+    car_brand_repository='car_brand_repository',
+    car_type_repository='car_type_repository'
 }

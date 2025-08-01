@@ -11,10 +11,10 @@ import {
     Default,
 } from 'sequelize-typescript';
 
-import { Wallet } from 'src/modules/wallet/entities/wallet.entity';
 import { Order } from 'src/modules/order/entities/order.entity';
 import { Gift } from 'src/modules/gift/entities/gift.entity';
 import { WalletTransactionType } from 'src/common/enums/wallet_transaction_type';
+import { Customer } from 'src/modules/customer/entities/customer.entity';
 
 @Table({ tableName: 'wallet_transactions' })
 export class WalletTransaction extends Model {
@@ -23,13 +23,13 @@ export class WalletTransaction extends Model {
     @Column(DataType.INTEGER)
     id: number;
 
-    @ForeignKey(() => Wallet)
+    @ForeignKey(() => Customer)
     @AllowNull(false)
     @Column(DataType.INTEGER)
-    walletId: number;
+    customerId: number;
 
-    @BelongsTo(() => Wallet)
-    wallet: Wallet;
+    @BelongsTo(() => Customer)
+    customer: Customer;
 
     @AllowNull(false)
     @Column(DataType.ENUM(...Object.values(WalletTransactionType)))

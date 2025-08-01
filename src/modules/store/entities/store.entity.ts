@@ -81,4 +81,8 @@ export class Store extends Model{
     @Default(StoreStatus.PENDING)
     @Column(DataType.ENUM(...Object.values(StoreStatus)))
     status: StoreStatus;
+
+    @Default(false)
+    @Column(DataType.BOOLEAN)
+    order_permission:boolean
 }

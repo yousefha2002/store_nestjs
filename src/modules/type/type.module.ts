@@ -4,10 +4,11 @@ import { TypeController } from './type.controller';
 import { TypeProvider } from './providers/type.provider';
 import { TypeLanguageProvider } from './providers/type_language.provider';
 import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
+import { AdminModule } from '../admin/admin.module';
 
 @Module({
   controllers: [TypeController],
   providers: [TypeService, ...TypeProvider],
-  imports: [CloudinaryModule],
+  imports: [CloudinaryModule,AdminModule],
 })
 export class TypeModule {}
