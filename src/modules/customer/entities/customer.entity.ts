@@ -14,6 +14,8 @@ import {
 import { Address } from 'src/modules/address/entities/address.entity';
 import { Avatar } from 'src/modules/avatar/entities/avatar.entity';
 import { Car } from 'src/modules/car/entities/car.entity';
+import { Cart } from 'src/modules/cart/entities/cart.entity';
+import { Gift } from 'src/modules/gift/entities/gift.entity';
 
 @Table({ tableName: 'customers' })
 export class Customer extends Model{
@@ -50,12 +52,6 @@ export class Customer extends Model{
     @BelongsTo(() => Avatar)
     avatar: Avatar;
 
-    @HasMany(() => Address)
-    addresses: Address[];
-
-    @HasMany(() => Car)
-    cars: Car[];
-
     @Default(0)
     @Column(DataType.FLOAT)
     balance: number;
@@ -63,4 +59,19 @@ export class Customer extends Model{
     @Default(0)
     @Column(DataType.INTEGER)
     points: number;
+
+    @HasMany(() => Address)
+    addresses: Address[];
+
+    @HasMany(() => Car)
+    cars: Car[];
+
+    @HasMany(() => Cart)
+    carts: Cart[];
+
+    @HasMany(() => Gift, 'senderId')
+    sentGifts: Gift[];
+
+    @HasMany(() => Gift, 'receiverId')
+    receivedGifts: Gift[];
 }

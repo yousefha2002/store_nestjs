@@ -6,7 +6,9 @@ import {
   AllowNull,
   PrimaryKey,
   AutoIncrement,
+  HasMany,
 } from 'sequelize-typescript';
+import { Store } from 'src/modules/store/entities/store.entity';
 
 @Table({ tableName: 'owners' })
 export class Owner extends Model {
@@ -38,4 +40,7 @@ export class Owner extends Model {
   @AllowNull(false)
   @Column(DataType.STRING)
   taxNumber: string;
+
+  @HasMany(() => Store)
+  stores: Store[];
 }
