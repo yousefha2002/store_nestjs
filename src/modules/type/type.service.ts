@@ -10,7 +10,7 @@ import { CreateTypeDto } from './dto/create-type.dto';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { TypeLanguage } from './entities/type_language.entity';
 import { Language } from 'src/common/enums/language';
-import { I18nContext, I18nService } from 'nestjs-i18n';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class TypeService {
@@ -62,13 +62,18 @@ export class TypeService {
     await this.typeLangRepo.create({ name, languageCode, typeId });
   }
 
-  async updateType(id: number, dto: CreateTypeDto, file?: Express.Multer.File) {
+  async updateType(
+    id: number,
+    dto: CreateTypeDto,
+    lang: string,
+    file?: Express.Multer.File,
+  ) {
     const type = await this.typeRepo.findByPk(id);
     if (!type) throw new NotFoundException(`Type with id ${id} not found`);
 
     // Check for duplicate names (excluding current type)
-    await this.ensureUniqueName(dto.nameEn, id);
-    await this.ensureUniqueName(dto.nameAr, id);
+    await this.ensureUniqueName(dto.nameEn, id, lang);
+    await this.ensureUniqueName(dto.nameAr, id, lang);
 
     // Replace image if file is provided
     if (file) {
@@ -88,13 +93,23 @@ export class TypeService {
       await this.updateLanguageName(id, Language.ar, dto.nameAr),
     ]);
 
-    return { message: 'Type updated successfully' };
+    const message = this.i18n.translate('translation.updatedSuccefully', {
+      lang, // تمرير اللغة يدويًا
+    });
+    return { message };
   }
 
-  private async ensureUniqueName(name: string, currentTypeId: number) {
+  private async ensureUniqueName(
+    name: string,
+    currentTypeId: number,
+    lang: string,
+  ) {
     const existing = await this.typeLangRepo.findOne({ where: { name } });
     if (existing && existing.typeId !== currentTypeId) {
-      throw new BadRequestException(`Type name "${name}" is already used`);
+      const message = this.i18n.translate('translation.find_type_message', {
+        lang, // تمرير اللغة يدويًا
+      });
+      throw new BadRequestException(message);
     }
   }
 
@@ -113,15 +128,23 @@ export class TypeService {
   }
 
   // if needed but not recommended
-  async deleteType(id: number) {
+  async deleteType(id: number, lang: string) {
     const type = await this.typeRepo.findByPk(id);
-    if (!type) throw new NotFoundException(`Type with id ${id} not found`);
+    if (!type) {
+      const message = this.i18n.translate('translation.type_not_found', {
+        lang, // تمرير اللغة يدويًا
+      });
+      throw new NotFoundException(message);
+    }
 
     await this.cloudinaryService.deleteImage(type.iconPublicId);
 
     await this.typeRepo.destroy({ where: { id } });
 
-    return { message: 'Type deleted successfully' };
+    const message = this.i18n.translate('translation.deletedSuccefully', {
+      lang, // تمرير اللغة يدويًا
+    });
+    return { message };
   }
 
   async getAllTypes(language: Language) {

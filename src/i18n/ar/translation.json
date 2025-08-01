@@ -1,5 +1,7 @@
 {
   "createdSuccefully": "تم الانشاء بنجاح",
-    "find_type_message": "إسم النوع موجود بالفعل"
-
+  "updatedSuccefully": "تم التعديل بنجاح",
+  "deletedSuccefully": "تم التعديل بنجاح",
+  "find_type_message": "إسم النوع موجود بالفعل",
+  "type_not_found":"هذا النوع غير موجود"
 }
