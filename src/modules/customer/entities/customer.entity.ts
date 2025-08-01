@@ -9,6 +9,7 @@ import {
     HasMany,
     ForeignKey,
     BelongsTo,
+    Default,
 } from 'sequelize-typescript';
 import { Address } from 'src/modules/address/entities/address.entity';
 import { Avatar } from 'src/modules/avatar/entities/avatar.entity';
@@ -41,7 +42,6 @@ export class Customer extends Model{
     @Column(DataType.STRING)
     imagePublicId:string
 
-
     @ForeignKey(() => Avatar)
     @AllowNull(true)
     @Column(DataType.INTEGER)
@@ -55,4 +55,12 @@ export class Customer extends Model{
 
     @HasMany(() => Car)
     cars: Car[];
+
+    @Default(0)
+    @Column(DataType.FLOAT)
+    balance: number;
+
+    @Default(0)
+    @Column(DataType.INTEGER)
+    points: number;
 }

@@ -28,14 +28,16 @@ import { OrderItemVariantModule } from './modules/order_item_variant/order_item_
 import { OrderItemInstructionModule } from './modules/order_item_instruction/order_item_instruction.module';
 import { AddressModule } from './modules/address/address.module';
 import { CarModule } from './modules/car/car.module';
-import { WalletModule } from './modules/wallet/wallet.module';
 import { WalletTransactionModule } from './modules/wallet_transaction/wallet_transaction.module';
 import { GiftModule } from './modules/gift/gift.module';
-
 import { MulterConfigService } from './multer/multer.config';
 import { MulterModule } from '@nestjs/platform-express';
 import { AvatarModule } from './modules/avatar/avatar.module';
 import { I18nModule, QueryResolver, HeaderResolver } from 'nestjs-i18n';
+import { CarTypeModule } from './modules/car_type/car_type.module';
+import { CarColorModule } from './modules/car_color/car_color.module';
+import { CarBrandModule } from './modules/car_brand/car_brand.module';
+import { CarModelModule } from './modules/car_model/car_model.module';
 import * as path from 'path';
 
 @Module({
@@ -81,13 +83,16 @@ import * as path from 'path';
     OrderItemInstructionModule,
     AddressModule,
     CarModule,
-    WalletModule,
     WalletTransactionModule,
     GiftModule,
     MulterModule.registerAsync({
       useClass: MulterConfigService,
     }),
     AvatarModule,
+    CarTypeModule,
+    CarColorModule,
+    CarBrandModule,
+    CarModelModule,
   ],
   providers: [MulterConfigService],
 })

@@ -1,6 +1,5 @@
 import { Controller, Get, Post, UploadedFile, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AvatarService } from './avatar.service';
-import { presetAvatars } from 'src/common/constants/avatars';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterExceptionFilter } from 'src/multer/multer.exception.filter';
 import { multerOptions } from 'src/multer/multer.options';
