@@ -33,9 +33,9 @@ export class AdminGuard implements CanActivate {
       }
 
       const admin = await this.adminService.findOneById(decoded.id);
-        if (!admin) {
-            throw new UnauthorizedException('Admin not found');
-        }
+      if (!admin) {
+          throw new UnauthorizedException('Admin not found');
+      }
       request.currentUser = admin;
       return !!decoded.id;
     } catch {

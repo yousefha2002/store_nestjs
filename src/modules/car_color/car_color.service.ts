@@ -12,8 +12,7 @@ import { UpdateCarColorDto } from '../car_color/dto/updae_car_color.dto';
 @Injectable()
 export class CarColorService {
     constructor(
-        @Inject(repositories.car_color_repository)
-        private carColorRepo: typeof CarColor,
+        @Inject(repositories.car_color_repository) private carColorRepo: typeof CarColor,
     ) {}
 
     async create(dto: CreateCarColorDto) {

@@ -26,7 +26,7 @@ export class CustomerService {
         if (existing) {
         throw new BadRequestException('Email is already taken');
         }
-    // one of them shuold send
+        // one of them shuold send
         if (body.avatarId && file) {
         throw new BadRequestException(
             'Choose either avatar or upload image, not both.',
@@ -62,5 +62,10 @@ export class CustomerService {
         const access_token = generateToken(payload);
         return {customer,message: 'Customer created successfully',token:access_token}
 
+    }
+
+    findById(id:number)
+    {
+        return this.customerRepo.findByPk(id)
     }
 }

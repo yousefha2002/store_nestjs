@@ -9,6 +9,7 @@ import { AvatarModule } from '../avatar/avatar.module';
 @Module({
   controllers: [CustomerController],
   providers: [CustomerService,...CustomerProvider],
-  imports:[OtpCodeModule,CloudinaryModule,AvatarModule]
+  imports:[OtpCodeModule,CloudinaryModule,AvatarModule],
+  exports:[CustomerService]
 })
 export class CustomerModule {}

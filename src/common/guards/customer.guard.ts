@@ -1,3 +1,4 @@
+import { CustomerService } from './../../modules/customer/customer.service';
 import {
   Injectable,
   CanActivate,
@@ -9,7 +10,10 @@ import { RoleStatus } from '../enums/role_status';
 
 @Injectable()
 export class CustomerGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private customerService:CustomerService
+  ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = request.headers.authorization;
@@ -25,6 +29,10 @@ export class CustomerGuard implements CanActivate {
 
       if (decoded.role !== RoleStatus.CUSTOMER) {
         throw new UnauthorizedException('Unauthorized role');
+      }
+      const customer = await this.customerService.findById(decoded.id);
+      if (!customer) {
+          throw new UnauthorizedException('Customer not found');
       }
 
       request.currentUser = decoded;

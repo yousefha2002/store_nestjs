@@ -85,7 +85,7 @@ export const databaseProviders = [
         CarBrand,
         CarModel,
       ]);
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ alter: false });
       return sequelize;
     },
   },
