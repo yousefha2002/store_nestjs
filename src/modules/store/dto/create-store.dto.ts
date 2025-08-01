@@ -1,5 +1,16 @@
-import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsString, IsPhoneNumber, IsEmail } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsNotEmpty,
+  IsString,
+  IsPhoneNumber,
+  IsEmail,
+  IsArray,
+  IsEnum,
+  ArrayNotEmpty,
+  ValidateNested,
+  IsOptional,
+} from 'class-validator';
+import { PickupMethodEnum } from 'src/common/enums/pickedup_method';
 
 export class CreateStoreDto {
   @IsEmail()
@@ -53,4 +64,31 @@ export class CreateStoreDto {
   @IsString()
   @IsNotEmpty()
   typeId: string;
+
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsEnum(PickupMethodEnum, { each: true })
+  pickupMethods: PickupMethodEnum[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateOpeningHourDto)
+  openingHours: CreateOpeningHourDto[];
+}
+
+import { DayOfWeek } from 'src/common/enums/day_of_week';
+
+import { ValidateIf } from 'class-validator';
+
+export class CreateOpeningHourDto {
+  @IsEnum(DayOfWeek)
+  day: DayOfWeek;
+
+  @ValidateIf((o) => o.closeTime !== undefined)
+  @IsString()
+  openTime?: string;
+
+  @ValidateIf((o) => o.openTime !== undefined)
+  @IsString()
+  closeTime?: string;
 }
