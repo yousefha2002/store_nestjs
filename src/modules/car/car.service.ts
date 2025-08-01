@@ -2,7 +2,7 @@ import { CarModelService } from './../car_model/car_model.service';
 import { CarBrandService } from './../car_brand/car_brand.service';
 import { CarColorService } from './../car_color/car_color.service';
 import { CarTypeService } from './../car_type/car_type.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { repositories } from 'src/common/enums/repositories';
 import { Car } from './entities/car.entity';
 import { CreateCarDto } from './dto/create_car.dto';
@@ -19,6 +19,16 @@ export class CarService {
 
     async create(customerId: number, dto: CreateCarDto) 
     {
+        const existing = await this.carRepo.findOne({
+        where: {
+            customerId,
+            carName: dto.carName,
+        },
+        });
+
+        if (existing) {
+        throw new BadRequestException('هذا الاسم مستخدم مسبقًا');
+        }
         await Promise.all([
             this.carTypeService.getOneOrFail(dto.carTypeId),
             this.carColorService.getOneOrFail(dto.colorId),
