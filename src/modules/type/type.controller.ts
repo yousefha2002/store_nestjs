@@ -5,7 +5,6 @@ import {
   Delete,
   Get,
   Param,
-  ParseEnumPipe,
   Post,
   Put,
   Query,
@@ -23,8 +22,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Language } from 'src/common/enums/language';
 import { Serilaize } from 'src/common/interceptors/serialize.interceptor';
 import { TypeDto } from './dto/type.dto';
-import * as path from 'path';
-import * as fs from 'fs';
 
 @Controller('type')
 export class TypeController {
@@ -74,17 +71,12 @@ export class TypeController {
     return this.typeService.getAllTypes(selectedLang);
   }
 
-  @Get('file')
-  testReadFile() {
-    const filePath = path.resolve(
-      process.cwd(),
-      'src/i18n/en/translation.json',
-    );
-    try {
-      const data = fs.readFileSync(filePath, 'utf-8');
-      return { success: true, content: JSON.parse(data) };
-    } catch (error) {
-      return { success: false, error: error.message };
-    }
+  @Get(':typeId')
+  @Serilaize(TypeDto)
+  getOne(
+    @Param('typeId') typeId: string,
+    @Query('lang') lang: Language = Language.en,
+  ) {
+    return this.typeService.getOneType(+typeId, lang);
   }
 }

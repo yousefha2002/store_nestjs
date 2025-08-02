@@ -30,7 +30,6 @@ import { OrderItemInstruction } from 'src/modules/order_item_instruction/entitie
 import { Gift } from 'src/modules/gift/entities/gift.entity';
 import { Avatar } from 'src/modules/avatar/entities/avatar.entity';
 import { CarType } from 'src/modules/car_type/entites/car_type.entity';
-import { CarColor } from 'src/modules/car_color/entities/car_color.entity';
 import { CarBrand } from 'src/modules/car_brand/entities/car_brand.entity';
 import { CarModel } from 'src/modules/car_model/entites/car_model.entity';
 
@@ -79,7 +78,6 @@ export const databaseProviders = [
         Gift,
         Avatar,
         CarType,
-        CarColor,
         CarBrand,
         CarModel,
       ]);

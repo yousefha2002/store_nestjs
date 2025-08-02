@@ -34,7 +34,6 @@ import { MulterModule } from '@nestjs/platform-express';
 import { AvatarModule } from './modules/avatar/avatar.module';
 import { I18nModule, QueryResolver, HeaderResolver } from 'nestjs-i18n';
 import { CarTypeModule } from './modules/car_type/car_type.module';
-import { CarColorModule } from './modules/car_color/car_color.module';
 import { CarBrandModule } from './modules/car_brand/car_brand.module';
 import { CarModelModule } from './modules/car_model/car_model.module';
 import * as path from 'path';
@@ -88,7 +87,6 @@ import * as path from 'path';
     }),
     AvatarModule,
     CarTypeModule,
-    CarColorModule,
     CarBrandModule,
     CarModelModule,
   ],
