@@ -47,21 +47,27 @@ export class CreateStoreDto {
   @IsNotEmpty()
   lng: string;
 
-  @Transform(({ value }) => {
-    try {
-      if (typeof value === 'string') {
-        const parsed = JSON.parse(value); // يحاول تحويلها لمصفوفة حقيقية
-        return Array.isArray(parsed) ? parsed : [parsed];
-      }
-      return value;
-    } catch {
-      return typeof value === 'string' ? value.split(',') : value;
-    }
-  })
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsEnum(PickupMethodEnum, { each: true })
-  pickupMethods: PickupMethodEnum[];
+  // @Transform(({ value }) => {
+  //   try {
+  //     if (typeof value === 'string') {
+  //       const parsed = JSON.parse(value); // يحاول تحويلها لمصفوفة حقيقية
+  //       return Array.isArray(parsed) ? parsed : [parsed];
+  //     }
+  //     return value;
+  //   } catch {
+  //     return typeof value === 'string' ? value.split(',') : value;
+  //   }
+  // })
+  // @IsArray()
+  // @ArrayNotEmpty()
+  // @IsEnum(PickupMethodEnum, { each: true })
+  // pickupMethods: PickupMethodEnum[];
+
+  @IsNotEmpty()
+  in_store: boolean;
+
+  @IsNotEmpty()
+  drive_thru: boolean;
 
   @IsString()
   @IsNotEmpty()

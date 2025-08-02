@@ -6,6 +6,7 @@ import {
   UseInterceptors,
   UploadedFiles,
   BadRequestException,
+  Get,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CreateStoreDto } from './dto/create-store.dto';
@@ -17,6 +18,8 @@ import {
   OpeningHourEnum,
   validateAndParseOpeningHours,
 } from 'src/common/utils/validateAndParseOpeningHours';
+import { LoginStoreDto } from './dto/store-login.dto';
+import { StoreGuard } from 'src/common/guards/store.guard';
 
 @Controller('store')
 export class StoreController {
@@ -59,5 +62,10 @@ export class StoreController {
       logoImage,
       coverImage,
     );
+  }
+
+  @Post('login')
+  login(@Body() body: LoginStoreDto) {
+    return this.storeService.login(body);
   }
 }
