@@ -6,10 +6,14 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RoleStatus } from '../enums/role_status';
+import { OwnerService } from 'src/modules/owner/owner.service';
 
 @Injectable()
 export class OwnerGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private ownerService: OwnerService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -26,6 +30,11 @@ export class OwnerGuard implements CanActivate {
 
       if (decoded.role !== RoleStatus.OWNER) {
         throw new UnauthorizedException('Unauthorized role');
+      }
+
+      const owner = await this.ownerService.findById(decoded.id);
+      if (!owner) {
+        throw new UnauthorizedException('Customer not found');
       }
 
       request.currentUser = decoded;

@@ -8,5 +8,6 @@ import { OtpCodeModule } from '../otp_code/otp_code.module';
   controllers: [OwnerController],
   providers: [OwnerService, ...OwnerProvider],
   imports: [OtpCodeModule],
+  exports: [OwnerService],
 })
 export class OwnerModule {}
