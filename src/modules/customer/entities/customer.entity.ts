@@ -43,16 +43,16 @@ export class Customer extends Model{
 
     @AllowNull(true)
     @Column(DataType.STRING)
-    imageUrl:string
+    imageUrl:string | null
 
     @AllowNull(true)
     @Column(DataType.STRING)
-    imagePublicId:string
+    imagePublicId:string | null
 
     @ForeignKey(() => Avatar)
     @AllowNull(true)
     @Column(DataType.INTEGER)
-    avatarId:number
+    avatarId:number| null
     
     @BelongsTo(() => Avatar)
     avatar: Avatar;

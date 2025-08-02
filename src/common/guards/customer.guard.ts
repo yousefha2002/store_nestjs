@@ -31,10 +31,6 @@ export class CustomerGuard implements CanActivate {
         throw new UnauthorizedException('Unauthorized role');
       }
       const customer = await this.customerService.findById(decoded.id);
-      if (!customer) {
-          throw new UnauthorizedException('Customer not found');
-      }
-
       request.currentUser = customer;
       return !!decoded.id;
     } catch {

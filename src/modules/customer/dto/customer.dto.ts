@@ -5,7 +5,7 @@ class SimpleEntityDto {
     id: number;
 
     @Expose()
-    name: string;
+    url: string;
 }
 
 export class CustomerDto {

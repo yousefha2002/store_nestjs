@@ -12,6 +12,7 @@ import { I18nService } from 'nestjs-i18n';
 import { Language } from 'src/common/enums/language';
 import { LoginCustomerDto } from './dto/login-customer.dto';
 import { Avatar } from '../avatar/entities/avatar.entity';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
 export class CustomerService {
@@ -75,9 +76,14 @@ export class CustomerService {
 
     }
 
-    findById(id:number)
+    async findById(id:number,lang=Language.en)
     {
-        return this.customerRepo.findOne({where:{id},include:[{model:Avatar}]})
+        const customer = await this.customerRepo.findOne({where:{id},include:[{model:Avatar}]})
+        if (!customer) {
+            const message = this.i18n.translate('translation.customer_not_found', { lang });
+            throw new NotFoundException(message);
+        }
+        return customer
     }
 
     async login(dto:LoginCustomerDto,lang:Language.en)
@@ -102,5 +108,47 @@ export class CustomerService {
             token: access_token,
             message: this.i18n.translate('translation.login_success', { lang }),
         };
+    }
+
+    async updateProfile(customerId: number,dto: UpdateCustomerDto,lang = Language.en,file?: Express.Multer.File)
+    {
+        const customer = await this.findById(customerId,lang);
+        if (dto.email && dto.email !== customer.email) {
+            const existing = await this.customerRepo.findOne({ where: { email: dto.email } });
+            if (existing) {
+                const message = this.i18n.translate('translation.email_exists', { lang });
+                throw new BadRequestException(message);
+            }
+        }
+        const hasFile = !!file;
+        const hasAvatarId = !!dto.avatarId;
+        if (!hasFile && !hasAvatarId) {
+            // إذا ما في ملف ولا avatarId،
+            // لازم يكون عندنا صورة أو أفاتار مخزن مسبقاً
+            if (!customer.imageUrl && !customer.avatarId) {
+                const message = this.i18n.translate('translation.no_image_or_avatar_found', { lang });
+                throw new BadRequestException(message);
+            }
+        }
+        if (hasFile) {
+            if (customer.imagePublicId) {
+                await this.cloudinaryService.deleteImage(customer.imagePublicId);
+            }
+            const uploaded = await this.cloudinaryService.uploadImage(file);
+            customer.imageUrl = uploaded.secure_url;
+            customer.imagePublicId = uploaded.public_id;
+            customer.avatarId = null;
+        }
+        else if (hasAvatarId&&dto.avatarId) {
+            const avatar = await this.avatarService.findById(+dto.avatarId);
+            customer.avatarId = +avatar.id;
+            customer.imageUrl = null;
+            customer.imagePublicId = null;
+        }
+        customer.name = dto.name
+        customer.email = dto.email
+        await customer.save()
+        await customer.reload({include: ['avatar']});
+        return customer
     }
 }
