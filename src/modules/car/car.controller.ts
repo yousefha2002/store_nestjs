@@ -15,7 +15,7 @@ export class CarController {
 
   @UseGuards(CustomerGuard)
   @Post()
-  create(@Body() dto:CreateCarDto,@CurrentUser() user:Customer,@Query('lang') lang: Language = Language.en)
+  create(@Body() dto:CreateCarDto,@CurrentUser() user:Customer,@Query('lang') lang:Language.en)
   {
     return this.carService.create(user.id,dto,lang)
   }
@@ -31,21 +31,21 @@ export class CarController {
   @Serilaize(CustomerCarListDto)
   @UseGuards(CustomerGuard)
   @Get(':carId/byCustomer')
-  getCustomerCar(@CurrentUser() user:Customer,@Param('carId') carId:number,@Query('lang') lang: Language = Language.en)
+  getCustomerCar(@CurrentUser() user:Customer,@Param('carId') carId:number,@Query('lang') lang:Language.en)
   {
     return this.carService.getCustomerCar(user.id,carId,lang)
   }
 
   @UseGuards(CustomerGuard)
   @Delete(':carId')
-  deleteCustomerCar(@CurrentUser() user:Customer,@Param('carId') carId:number,@Query('lang') lang: Language = Language.en)
+  deleteCustomerCar(@CurrentUser() user:Customer,@Param('carId') carId:number,@Query('lang')lang:Language.en)
   {
     return this.carService.delete(user.id,carId,lang)
   }
 
   @UseGuards(CustomerGuard)
   @Put(':carId')
-  update(@Body() dto:UpdateCarDto,@CurrentUser() user:Customer,@Param('carId') carId:number,@Query('lang') lang: Language = Language.en)
+  update(@Body() dto:UpdateCarDto,@CurrentUser() user:Customer,@Param('carId') carId:number,@Query('lang') lang:Language.en)
   {
     return this.carService.update(user.id,carId,dto,lang)
   }

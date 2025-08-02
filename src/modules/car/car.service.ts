@@ -14,6 +14,7 @@ import { CarBrandService } from './../car_brand/car_brand.service';
 import { CarColorService } from './../car_color/car_color.service';
 import { CarTypeService } from './../car_type/car_type.service';
 import { Op } from 'sequelize';
+import { Language } from 'src/common/enums/language';
 
 @Injectable()
 export class CarService {
@@ -26,7 +27,7 @@ export class CarService {
         private readonly i18n: I18nService,
     ) {}
 
-    async create(customerId: number, dto: CreateCarDto, lang:string) 
+    async create(customerId: number, dto: CreateCarDto, lang:Language.en) 
     {
         const carCount = await this.carRepo.count({ where: { customerId } });
 
@@ -73,7 +74,7 @@ export class CarService {
         });
     }
 
-    async getCustomerCar(customerId: number, carId: number, lang:string) {
+    async getCustomerCar(customerId: number, carId: number, lang:Language.en) {
         const car = await this.carRepo.findOne({
         where: { id: carId, customerId },
         include: ['carType', 'color', 'brand', 'model'],
@@ -87,7 +88,7 @@ export class CarService {
         return car;
     }
 
-    async delete(customerId: number, carId: number, lang:string) {
+    async delete(customerId: number, carId: number, lang:Language.en) {
         const car = await this.getCustomerCar(customerId, carId, lang);
         await car.destroy();
 
@@ -95,7 +96,7 @@ export class CarService {
         return { message };
     }
 
-    async update(customerId: number, carId: number, dto: UpdateCarDto, lang:string) {
+    async update(customerId: number, carId: number, dto: UpdateCarDto, lang:Language.en) {
         const car = await this.getCustomerCar(customerId, carId, lang);
 
         if (dto.carName && dto.carName !== car.carName) {
