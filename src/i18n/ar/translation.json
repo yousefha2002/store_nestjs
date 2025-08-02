@@ -3,5 +3,13 @@
   "updatedSuccefully": "تم التعديل بنجاح",
   "deletedSuccefully": "تم التعديل بنجاح",
   "find_type_message": "إسم النوع موجود بالفعل",
-  "type_not_found":"هذا النوع غير موجود"
+  "type_not_found":"هذا النوع غير موجود",
+  "car": {
+    "max_limit": "لا يمكنك إضافة أكثر من 5 سيارات",
+    "name_exists": "اسم السيارة مستخدم مسبقًا",
+    "not_found": "السيارة غير موجودة",
+    "created_success": "تم إنشاء السيارة بنجاح",
+    "updated_success": "تم تعديل السيارة بنجاح",
+    "deleted_success": "تم حذف السيارة بنجاح"
+  }
 }

@@ -3,5 +3,13 @@
   "updatedSuccefully": "updated succesfully",
   "deletedSuccefully": "deleted succesfully",
   "find_type_message": "type name already exists",
-  "type_not_found":"this type is not found"
+  "type_not_found":"this type is not found",
+  "car": {
+    "max_limit": "You cannot add more than 5 cars",
+    "name_exists": "Car name is already in use",
+    "not_found": "Car not found",
+    "created_success": "Car created successfully",
+    "updated_success": "Car updated successfully",
+    "deleted_success": "Car deleted successfully"
+  }
 }

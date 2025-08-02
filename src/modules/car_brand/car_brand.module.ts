@@ -7,6 +7,7 @@ import { AdminModule } from '../admin/admin.module';
 @Module({
   controllers: [CarBrandController],
   providers: [CarBrandService,...CarBrandProvider],
-  imports:[AdminModule]
+  imports:[AdminModule],
+  exports:[CarBrandService]
 })
 export class CarBrandModule {}

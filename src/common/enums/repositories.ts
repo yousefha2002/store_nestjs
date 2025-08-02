@@ -24,5 +24,6 @@ export enum repositories {
     car_color_repository='car_color_repository',
     car_model_repository='car_model_repository',
     car_brand_repository='car_brand_repository',
-    car_type_repository='car_type_repository'
+    car_type_repository='car_type_repository',
+    car_repository='car_repository'
 }
