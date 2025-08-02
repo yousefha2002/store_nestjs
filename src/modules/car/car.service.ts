@@ -1,118 +1,135 @@
-import { CarModelService } from './../car_model/car_model.service';
-import { CarBrandService } from './../car_brand/car_brand.service';
-import { CarColorService } from './../car_color/car_color.service';
-import { CarTypeService } from './../car_type/car_type.service';
-import { BadRequestException, Inject, Injectable, NotFoundException, Param } from '@nestjs/common';
+import {
+    BadRequestException,
+    Inject,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
+import { I18nService } from 'nestjs-i18n';
 import { repositories } from 'src/common/enums/repositories';
 import { Car } from './entities/car.entity';
 import { CreateCarDto } from './dto/create_car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
+import { CarModelService } from './../car_model/car_model.service';
+import { CarBrandService } from './../car_brand/car_brand.service';
+import { CarColorService } from './../car_color/car_color.service';
+import { CarTypeService } from './../car_type/car_type.service';
 import { Op } from 'sequelize';
 
 @Injectable()
 export class CarService {
     constructor(
         @Inject(repositories.car_repository) private carRepo: typeof Car,
-        private carTypeService:CarTypeService,
-        private carColorService:CarColorService,
-        private carBrandService:CarBrandService,
-        private carModelService:CarModelService
-    ){}
+        private carTypeService: CarTypeService,
+        private carColorService: CarColorService,
+        private carBrandService: CarBrandService,
+        private carModelService: CarModelService,
+        private readonly i18n: I18nService,
+    ) {}
 
-    async create(customerId: number, dto: CreateCarDto) 
+    async create(customerId: number, dto: CreateCarDto, lang:string) 
     {
-        const carCount = await this.carRepo.count({
-            where: { customerId },
-        });
+        const carCount = await this.carRepo.count({ where: { customerId } });
 
         if (carCount >= 5) {
-            throw new BadRequestException('لا يمكنك إضافة أكثر من 5 سيارات');
+        const message = this.i18n.translate('translation.car.max_limit', { lang });
+        throw new BadRequestException(message);
         }
+
         const existing = await this.carRepo.findOne({
-        where: {
-            customerId,
-            carName: dto.carName,
-        },
+        where: { customerId, carName: dto.carName },
         });
 
         if (existing) {
-        throw new BadRequestException('هذا الاسم مستخدم مسبقًا');
+        const message = this.i18n.translate('translation.car.name_exists', { lang });
+        throw new BadRequestException(message);
         }
+
         await Promise.all([
-            this.carTypeService.getOneOrFail(dto.carTypeId),
-            this.carColorService.getOneOrFail(dto.colorId),
-            this.carBrandService.getOneOrFail(dto.brandId),
-            this.carModelService.getOneOrFail(dto.modelId),
+        this.carTypeService.getOneOrFail(dto.carTypeId),
+        this.carColorService.getOneOrFail(dto.colorId),
+        this.carBrandService.getOneOrFail(dto.brandId),
+        this.carModelService.getOneOrFail(dto.modelId),
         ]);
+
         if (dto.isDefault) {
-            await this.carRepo.update({ isDefault: false },{ where: { customerId } });
+        await this.carRepo.update({ isDefault: false }, { where: { customerId } });
         }
-        return this.carRepo.create({
-            ...dto,
-            customerId,
-            isDefault: dto.isDefault ?? false,
+
+        await this.carRepo.create({
+        ...dto,
+        customerId,
+        isDefault: dto.isDefault ?? false,
         });
+
+        const message = this.i18n.translate('translation.car.created_success', { lang });
+        return { message };
     }
 
     getAllCustomerCars(customerId: number) {
         return this.carRepo.findAll({
-            where: { customerId },
-            order: [['createdAt', 'DESC']],
-            include: ['carType', 'color', 'brand', 'model'],
+        where: { customerId },
+        order: [['createdAt', 'DESC']],
+        include: ['carType', 'color', 'brand', 'model'],
         });
     }
 
-    async getCustomerCar(customerId:number,carId:number)
-    {
+    async getCustomerCar(customerId: number, carId: number, lang:string) {
         const car = await this.carRepo.findOne({
-            where:{id:carId,customerId},
-            order: [['createdAt', 'DESC']],
-            include: ['carType', 'color', 'brand', 'model']
-        })
-        if(!car)
-        {
-            throw new NotFoundException("car is not found")
+        where: { id: carId, customerId },
+        include: ['carType', 'color', 'brand', 'model'],
+        });
+
+        if (!car) {
+        const message = this.i18n.translate('translation.car.not_found', { lang });
+        throw new NotFoundException(message);
         }
-        return car
+
+        return car;
     }
 
-    async delete(customerId: number, carId: number) {
-        const car = await this.getCustomerCar(customerId, carId);
+    async delete(customerId: number, carId: number, lang:string) {
+        const car = await this.getCustomerCar(customerId, carId, lang);
         await car.destroy();
-        return { message: 'تم حذف السيارة بنجاح' };
+
+        const message = this.i18n.translate('translation.car.deleted_success', { lang });
+        return { message };
     }
 
-    async update(customerId: number, carId: number, dto: UpdateCarDto) {
-        const car = await this.getCustomerCar(customerId, carId);
+    async update(customerId: number, carId: number, dto: UpdateCarDto, lang:string) {
+        const car = await this.getCustomerCar(customerId, carId, lang);
 
         if (dto.carName && dto.carName !== car.carName) {
-            const existing = await this.carRepo.findOne({
+        const existing = await this.carRepo.findOne({
             where: {
-                customerId,
-                carName: dto.carName,
-                id: { [Op.ne]: carId }
+            customerId,
+            carName: dto.carName,
+            id: { [Op.ne]: carId },
             },
-            });
+        });
 
-            if (existing) {
-                throw new BadRequestException('اسم السيارة مستخدم مسبقًا');
-            }
+        if (existing) {
+            const message = this.i18n.translate('translation.car.name_exists', { lang });
+            throw new BadRequestException(message);
+        }
         }
 
         await Promise.all([
-            this.carTypeService.getOneOrFail(dto.carTypeId),
-            this.carColorService.getOneOrFail(dto.colorId),
-            this.carBrandService.getOneOrFail(dto.brandId),
-            this.carModelService.getOneOrFail(dto.modelId),
+        this.carTypeService.getOneOrFail(dto.carTypeId),
+        this.carColorService.getOneOrFail(dto.colorId),
+        this.carBrandService.getOneOrFail(dto.brandId),
+        this.carModelService.getOneOrFail(dto.modelId),
         ]);
 
         if (dto.isDefault) {
-            await this.carRepo.update({ isDefault: false }, { where: { customerId } });
+        await this.carRepo.update({ isDefault: false }, { where: { customerId } });
         }
 
-        return car.update({
-            ...dto,
-            isDefault: dto.isDefault ?? car.isDefault,
+        await car.update({
+        ...dto,
+        isDefault: dto.isDefault ?? car.isDefault,
         });
+
+        const message = this.i18n.translate('translation.car.updated_success', { lang });
+        return { message };
     }
 }
