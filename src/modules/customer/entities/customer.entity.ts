@@ -37,6 +37,10 @@ export class Customer extends Model{
     @Column(DataType.STRING)
     email: string;
 
+    @AllowNull(false)
+    @Column(DataType.STRING)
+    password: string;
+
     @AllowNull(true)
     @Column(DataType.STRING)
     imageUrl:string

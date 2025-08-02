@@ -7,6 +7,7 @@ import { OtpCodeService } from '../otp_code/otp_code.service';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { RoleStatus } from 'src/common/enums/role_status';
 import { generateToken } from 'src/common/utils/generateToken';
+import { hashPassword } from 'src/common/utils/password';
 
 @Injectable()
 export class CustomerService {
@@ -20,7 +21,7 @@ export class CustomerService {
 
     async createCustomer(body: CreateCustomerDto, file?: Express.Multer.File) 
     {
-        const { email, phone, token } = body;
+        const { email, phone, token,password } = body;
         let otp = await this.otpCodeService.validateOtp(phone, token);
         const existing = await this.customerRepo.findOne({ where: { email } });
         if (existing) {
@@ -48,10 +49,12 @@ export class CustomerService {
             const avatar = await this.avatarService.findById(+body.avatarId)
             avatarId = avatar.id;
         }
+        const hashedPassword = await hashPassword(password);
         const customer = await this.customerRepo.create({
             name: body.name,
-            email: body.email,
-            phone: body.phone,
+            email,
+            phone,
+            password:hashedPassword,
             imageUrl,
             imagePublicId,
             avatarId,
@@ -60,7 +63,8 @@ export class CustomerService {
         await otp.save();
         const payload = { id: customer.id,role:RoleStatus.CUSTOMER };
         const access_token = generateToken(payload);
-        return {customer,message: 'Customer created successfully',token:access_token}
+        const { password: _, ...safeCustomer } = customer.toJSON();
+        return {customer:safeCustomer,message: 'Customer created successfully',token:access_token}
 
     }
 

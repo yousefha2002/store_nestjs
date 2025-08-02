@@ -16,6 +16,12 @@ export class CreateCustomerDto {
     phone: string;
 
     @IsNotEmpty()
+    @MinLength(6, { message: 'Password must be at least 6 characters' })
+    @MaxLength(30, { message: 'Password must be at most 30 characters' })
+    @IsString()
+    password: string;
+
+    @IsNotEmpty()
     @IsString()
     token: string;
 
