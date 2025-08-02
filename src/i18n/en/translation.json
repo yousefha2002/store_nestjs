@@ -22,5 +22,9 @@
   "both_avatar_and_image": "Choose either avatar or upload image, not both.",
   "no_avatar_or_image": "You must choose avatar or upload image.",
   "invalid_credentials": "Invalid phone or password",
-  "login_success": "Logged in successfully"
+  "login_success": "Logged in successfully",
+  "address": {
+    "max_limit": "You cannot add more than 8 addresses",
+    "label_exists": "You have already used this label for another address"
+  }
 }
