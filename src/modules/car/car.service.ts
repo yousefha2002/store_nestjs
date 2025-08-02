@@ -75,7 +75,7 @@ export class CarService {
     return this.carRepo.findAll({
       where: { customerId },
       order: [['createdAt', 'DESC']],
-      include: ['carType', 'brand', 'model'],
+      include: ['carType', 'brand', 'model'], 
     });
   }
 
