@@ -11,7 +11,6 @@ import { CreateStoreDto } from './dto/create-store.dto';
 import { comparePassword, hashPassword } from 'src/common/utils/password';
 import { TypeService } from '../type/type.service';
 import { UploadApiResponse } from 'cloudinary';
-import { PickupMethodEnum } from 'src/common/enums/pickedup_method';
 import { OpeningHourEnum } from 'src/common/utils/validateAndParseOpeningHours';
 import { OpeningHourService } from '../opening_hour/opening_hour.service';
 import { LoginStoreDto } from './dto/store-login.dto';
@@ -36,7 +35,7 @@ export class StoreService {
     cover: Express.Multer.File,
   ) {
     await Promise.all([
-      this.checkIfPoneUsed(dto.phone),
+      this.checkIfPhoneUsed(dto.phone),
       this.typeService.findById(dto.typeId),
     ]);
     const [logoUpload, coverUpload] = await Promise.all([
@@ -55,7 +54,7 @@ export class StoreService {
     return { message: 'store has been created' };
   }
 
-  async checkIfPoneUsed(phone: string) {
+  async checkIfPhoneUsed(phone: string) {
     const store = await this.storeRepo.findOne({ where: { phone } });
     if (store) {
       throw new BadRequestException('Store phone already used');

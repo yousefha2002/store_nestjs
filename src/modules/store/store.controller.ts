@@ -19,7 +19,6 @@ import {
   validateAndParseOpeningHours,
 } from 'src/common/utils/validateAndParseOpeningHours';
 import { LoginStoreDto } from './dto/store-login.dto';
-import { StoreGuard } from 'src/common/guards/store.guard';
 
 @Controller('store')
 export class StoreController {
@@ -54,7 +53,6 @@ export class StoreController {
 
     const openingHours2 = validateAndParseOpeningHours(body.openingHours);
 
-    console.log({ user, body, openingHours2 });
     return this.storeService.create(
       body,
       user.id,
