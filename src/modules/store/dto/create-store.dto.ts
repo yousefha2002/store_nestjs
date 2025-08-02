@@ -9,6 +9,8 @@ import {
   ArrayNotEmpty,
   ValidateNested,
   IsMobilePhone,
+  MaxLength,
+  MinLength,
 } from 'class-validator';
 import { PickupMethodEnum } from 'src/common/enums/pickedup_method';
 
@@ -29,6 +31,8 @@ export class CreateStoreDto {
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(6, { message: 'Password must be at least 6 characters' })
+  @MaxLength(30, { message: 'Password must be at most 30 characters' })
   password: string;
 
   @IsString()
