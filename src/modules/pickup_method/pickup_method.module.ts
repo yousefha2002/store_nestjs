@@ -5,6 +5,7 @@ import { PickupMethodProvider } from './providers/pickup_method.provider';
 
 @Module({
   controllers: [PickupMethodController],
-  providers: [PickupMethodService,...PickupMethodProvider],
+  providers: [PickupMethodService, ...PickupMethodProvider],
+  exports: [PickupMethodService],
 })
 export class PickupMethodModule {}

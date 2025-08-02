@@ -13,6 +13,8 @@ import { StoreService } from './store.service';
 import { OwnerGuard } from 'src/common/guards/owner.guard';
 import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
 import { multerOptions } from 'src/multer/multer.options';
+import { validateAndParseOpeningHours } from 'src/common/utils/validateAndParseOpeningHours';
+import { OpeningHour } from '../opening_hour/entites/opening_hour.entity';
 
 @Controller('store')
 export class StoreController {
@@ -23,7 +25,7 @@ export class StoreController {
   @UseInterceptors(
     FileFieldsInterceptor(
       [
-        { name: 'profile', maxCount: 1 },
+        { name: 'logo', maxCount: 1 },
         { name: 'cover', maxCount: 1 },
       ],
       multerOptions,
@@ -34,20 +36,26 @@ export class StoreController {
     @CurrentUser() user: any,
     @UploadedFiles()
     files: {
-      profile?: Express.Multer.File[];
+      logo?: Express.Multer.File[];
       cover?: Express.Multer.File[];
     },
   ) {
-    const profileImage = files.profile?.[0];
+    const logoImage = files.logo?.[0];
     const coverImage = files.cover?.[0];
 
-    if (!profileImage || !coverImage) {
-      throw new BadRequestException(
-        'Both profile and cover images are required',
-      );
+    if (!logoImage || !coverImage) {
+      throw new BadRequestException('Both logo and cover images are required');
     }
 
-    console.log({ user, body });
-    // return this.storeService.createStore(body, user, profileImage, coverImage);
+    const openingHours2 = validateAndParseOpeningHours(body.openingHours);
+
+    console.log({ user, body, openingHours2 });
+    return this.storeService.create(
+      body,
+      user.id,
+      openingHours2 as OpeningHour[],
+      logoImage,
+      coverImage,
+    );
   }
 }

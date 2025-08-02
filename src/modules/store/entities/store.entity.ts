@@ -48,7 +48,7 @@ export class Store extends Model {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  storeNumber: string;
+  password: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)

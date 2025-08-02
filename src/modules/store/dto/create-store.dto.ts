@@ -29,6 +29,10 @@ export class CreateStoreDto {
 
   @IsString()
   @IsNotEmpty()
+  password: string;
+
+  @IsString()
+  @IsNotEmpty()
   typeId: string;
 
   @IsString()
@@ -55,17 +59,9 @@ export class CreateStoreDto {
   @IsEnum(PickupMethodEnum, { each: true })
   pickupMethods: PickupMethodEnum[];
 
-  @Transform(({ value }) => {
-    try {
-      return typeof value === 'string' ? JSON.parse(value) : value;
-    } catch {
-      return [];
-    }
-  })
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => CreateOpeningHourDto)
-  openingHours: CreateOpeningHourDto[];
+  @IsString()
+  @IsNotEmpty()
+  openingHours: string;
 }
 
 import { DayOfWeek } from 'src/common/enums/day_of_week';
