@@ -75,14 +75,14 @@ export class CarService {
     return this.carRepo.findAll({
       where: { customerId },
       order: [['createdAt', 'DESC']],
-      include: ['carType', 'color', 'brand', 'model'],
+      include: ['carType', 'brand', 'model'],
     });
   }
 
   async getCustomerCar(customerId: number, carId: number, lang: Language.en) {
     const car = await this.carRepo.findOne({
       where: { id: carId, customerId },
-      include: ['carType', 'color', 'brand', 'model'],
+      include: ['carType', 'brand', 'model'],
     });
 
     if (!car) {
