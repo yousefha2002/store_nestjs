@@ -83,8 +83,8 @@ export class StoreService {
       coverUrl: coverUpload.secure_url,
       coverPublicId: coverUpload.public_id,
       ownerId: ownerId,
-      in_store: dto.pickupMethods.includes(PickupMethodEnum.IN_STORE),
-      drive_thru: dto.pickupMethods.includes(PickupMethodEnum.DRIVE_THRU),
+      in_store: dto.in_store,
+      drive_thru: dto.drive_thru,
     });
     return storeCreated;
   }
