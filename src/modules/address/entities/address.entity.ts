@@ -38,4 +38,8 @@ export class Address extends Model{
     @AllowNull(false)
     @Column(DataType.FLOAT)
     lng: number;
+
+    @AllowNull(false)
+    @Column(DataType.STRING)
+    label: string;
 }

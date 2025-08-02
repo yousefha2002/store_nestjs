@@ -1,5 +1,5 @@
 import { AvatarService } from './../avatar/avatar.service';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { repositories } from 'src/common/enums/repositories';
 import { Customer } from './entities/customer.entity';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -7,9 +7,11 @@ import { OtpCodeService } from '../otp_code/otp_code.service';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { RoleStatus } from 'src/common/enums/role_status';
 import { generateToken } from 'src/common/utils/generateToken';
-import { hashPassword } from 'src/common/utils/password';
+import { comparePassword, hashPassword } from 'src/common/utils/password';
 import { I18nService } from 'nestjs-i18n';
 import { Language } from 'src/common/enums/language';
+import { LoginCustomerDto } from './dto/login-customer.dto';
+import { Avatar } from '../avatar/entities/avatar.entity';
 
 @Injectable()
 export class CustomerService {
@@ -75,6 +77,30 @@ export class CustomerService {
 
     findById(id:number)
     {
-        return this.customerRepo.findByPk(id)
+        return this.customerRepo.findOne({where:{id},include:[{model:Avatar}]})
+    }
+
+    async login(dto:LoginCustomerDto,lang:Language.en)
+    {
+        const customer = await this.customerRepo.findOne({where: { phone: dto.phone }});
+        if (!customer) {
+            const message = this.i18n.translate('translation.invalid_credentials', { lang });
+            throw new NotFoundException(message);
+        }
+        const isMatch = await comparePassword(dto.password, customer.password);
+        if (!isMatch) {
+            const message = this.i18n.translate('translation.invalid_credentials', { lang });
+            throw new BadRequestException(message);
+        }
+
+        const payload = { id: customer.id, role: RoleStatus.CUSTOMER };
+        const access_token = generateToken(payload);
+
+        const { password: _, ...safeCustomer } = customer.toJSON();
+        return {
+            customer: safeCustomer,
+            token: access_token,
+            message: this.i18n.translate('translation.login_success', { lang }),
+        };
     }
 }

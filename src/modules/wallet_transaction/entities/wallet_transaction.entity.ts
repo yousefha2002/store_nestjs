@@ -8,7 +8,6 @@ import {
     ForeignKey,
     AllowNull,
     BelongsTo,
-    Default,
 } from 'sequelize-typescript';
 
 import { Order } from 'src/modules/order/entities/order.entity';

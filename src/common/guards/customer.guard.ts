@@ -35,7 +35,7 @@ export class CustomerGuard implements CanActivate {
           throw new UnauthorizedException('Customer not found');
       }
 
-      request.currentUser = decoded;
+      request.currentUser = customer;
       return !!decoded.id;
     } catch {
       throw new UnauthorizedException('Invalid or expired token');
