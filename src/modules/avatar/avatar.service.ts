@@ -17,7 +17,7 @@ export class AvatarService {
         const avatar = await this.avatarRepo.findByPk(id)
         if(!avatar)
         {
-            const message = this.i18n.translate('translation.avatar.file_required', { lang });
+            const message = this.i18n.translate('translation.not_found', { lang });
             throw new NotFoundException(message)
         }
         return avatar

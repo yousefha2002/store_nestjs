@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CarBrandService } from './car_brand.service';
 import { CreateCarBrandDto } from './dto/create_car_brand.dto';
 import { UpdateCarBrandDto } from './dto/update_car_brand.dto';
 import { AdminGuard } from 'src/common/guards/admin.guard';
+import { Language } from 'src/common/enums/language';
 
 @Controller('car-brand')
 export class CarBrandController {
@@ -10,7 +11,7 @@ export class CarBrandController {
 
   @UseGuards(AdminGuard)
   @Post()
-  create(@Body() dto: CreateCarBrandDto) {
+  create(@Body() dto: CreateCarBrandDto,@Query('lang') lang:Language.en) {
     return this.carBrandService.create(dto);
   }
 
@@ -19,6 +20,7 @@ export class CarBrandController {
   update(
     @Param('id') id: number,
     @Body() dto: UpdateCarBrandDto,
+    @Query('lang') lang:Language.en
   ) {
     return this.carBrandService.update(id, dto);
   }
@@ -29,7 +31,7 @@ export class CarBrandController {
   }
 
   @Get(':id')
-  getOne(@Param('id') id: number) {
+  getOne(@Param('id') id: number,@Query('lang') lang:Language.en) {
     return this.carBrandService.getOneOrFail(id);
   }
 }

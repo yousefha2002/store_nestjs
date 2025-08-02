@@ -1,9 +1,10 @@
-import { Body, Controller, Post, UploadedFile, UseFilters, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Post, Query, UploadedFile, UseFilters, UseInterceptors } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/multer/multer.options';
 import { MulterExceptionFilter } from 'src/multer/multer.exception.filter';
 import { CreateCustomerDto } from './dto/create-customer.dto';
+import { Language } from 'src/common/enums/language';
 
 @Controller('customer')
 export class CustomerController {
@@ -12,8 +13,8 @@ export class CustomerController {
   @Post('create')
   @UseInterceptors(FileInterceptor('image', multerOptions))
   @UseFilters(MulterExceptionFilter)
-  createCustomer(@Body() body:CreateCustomerDto,@UploadedFile() file?: Express.Multer.File)
+  createCustomer(@Body() body:CreateCustomerDto,@Query('lang') lang=Language.en,@UploadedFile() file?: Express.Multer.File)
   {
-    return this.customerService.createCustomer(body,file)
+    return this.customerService.createCustomer(body,lang,file)
   }
 }

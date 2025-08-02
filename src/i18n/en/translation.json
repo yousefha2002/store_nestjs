@@ -1,7 +1,4 @@
 {
-  "createdSuccefully": "created succesfully!",
-  "updatedSuccefully": "updated succesfully",
-  "deletedSuccefully": "deleted succesfully",
   "find_type_message": "type name already exists",
   "type_not_found":"this type is not found",
   "car": {
@@ -15,5 +12,13 @@
   "file_required": "File is required",
   "avatar":{
     "not_found": "Avatar not found"
-  }
+  },
+  "createdSuccefully": "created succesfully!",
+  "updatedSuccefully": "updated succesfully",
+  "deletedSuccefully": "deleted succesfully",
+  "name_exists": "Name is already in use",
+  "not_found": "Item not found",
+  "email_exists": "Email is already taken",
+  "both_avatar_and_image": "Choose either avatar or upload image, not both.",
+  "no_avatar_or_image": "You must choose avatar or upload image."
 }

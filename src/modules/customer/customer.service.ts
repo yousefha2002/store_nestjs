@@ -8,6 +8,8 @@ import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { RoleStatus } from 'src/common/enums/role_status';
 import { generateToken } from 'src/common/utils/generateToken';
 import { hashPassword } from 'src/common/utils/password';
+import { I18nService } from 'nestjs-i18n';
+import { Language } from 'src/common/enums/language';
 
 @Injectable()
 export class CustomerService {
@@ -17,33 +19,35 @@ export class CustomerService {
     private otpCodeService: OtpCodeService,
     private cloudinaryService: CloudinaryService,
     private avatarService: AvatarService,
+    private readonly i18n: I18nService
     ) {}
 
-    async createCustomer(body: CreateCustomerDto, file?: Express.Multer.File) 
+    async createCustomer(body: CreateCustomerDto,lang=Language.en, file?: Express.Multer.File) 
     {
         const { email, phone, token,password } = body;
         let otp = await this.otpCodeService.validateOtp(phone, token);
         const existing = await this.customerRepo.findOne({ where: { email } });
         if (existing) {
-        throw new BadRequestException('Email is already taken');
+            const message = this.i18n.translate('translation.email_exists', { lang });
+            throw new BadRequestException(message)
         }
         // one of them shuold send
         if (body.avatarId && file) {
-        throw new BadRequestException(
-            'Choose either avatar or upload image, not both.',
-        );
+            const message = this.i18n.translate('translation.both_avatar_and_image', { lang });
+            throw new BadRequestException(message)    
         }
         if (!body.avatarId && !file) {
-        throw new BadRequestException('You must choose avatar or upload image.');
+            const message = this.i18n.translate('translation.no_avatar_or_image', { lang });
+            throw new BadRequestException(message);
         }
 
         let imageUrl: string | null = null;
         let imagePublicId: string | null = null;
         let avatarId: number | null = null;
         if (file) {
-        const uploaded = await this.cloudinaryService.uploadImage(file);
-        imageUrl = uploaded.secure_url;
-        imagePublicId = uploaded.public_id;
+            const uploaded = await this.cloudinaryService.uploadImage(file);
+            imageUrl = uploaded.secure_url;
+            imagePublicId = uploaded.public_id;
         }
         if (body.avatarId) {
             const avatar = await this.avatarService.findById(+body.avatarId)
@@ -64,7 +68,8 @@ export class CustomerService {
         const payload = { id: customer.id,role:RoleStatus.CUSTOMER };
         const access_token = generateToken(payload);
         const { password: _, ...safeCustomer } = customer.toJSON();
-        return {customer:safeCustomer,message: 'Customer created successfully',token:access_token}
+        const message = this.i18n.translate('translation.createdSuccefully', { lang });
+        return {customer:safeCustomer,message: message,token:access_token}
 
     }
 

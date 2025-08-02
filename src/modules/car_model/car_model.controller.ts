@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post, Put, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { CarModelService } from '../car_model/car_model.service';
-import { CreateCarModelDto } from '../car_model/dto/create_car_model.dto';
-import { UpdateCarModelDto } from '../car_model/dto/update_car_model.dto';
+import { Body, Controller, Get, Param, Post, Put, Query, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { CarModelService } from './car_model.service';
+import { CreateCarModelDto } from './dto/create_car_model.dto';
+import { UpdateCarModelDto } from './dto/update_car_model.dto';
 import { AdminGuard } from 'src/common/guards/admin.guard';
+import { Language } from 'src/common/enums/language';
 
 @Controller('car-model')
 export class CarModelController {
@@ -10,8 +11,11 @@ export class CarModelController {
 
   @UseGuards(AdminGuard)
   @Post()
-  create(@Body() dto: CreateCarModelDto) {
-    return this.carModelService.create(dto);
+  create(
+    @Body() dto: CreateCarModelDto,
+    @Query('lang') lang: Language = Language.en,
+  ) {
+    return this.carModelService.create(dto, lang);
   }
 
   @UseGuards(AdminGuard)
@@ -19,8 +23,9 @@ export class CarModelController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateCarModelDto,
+    @Query('lang') lang: Language = Language.en,
   ) {
-    return this.carModelService.update(id, dto);
+    return this.carModelService.update(id, dto, lang);
   }
 
   @Get()
@@ -29,7 +34,7 @@ export class CarModelController {
   }
 
   @Get(':id')
-  getOne(@Param('id', ParseIntPipe) id: number) {
-    return this.carModelService.getOneOrFail(id);
+  getOne(@Param('id', ParseIntPipe) id: number, @Query('lang') lang: Language = Language.en) {
+    return this.carModelService.getOneOrFail(id, lang);
   }
 }

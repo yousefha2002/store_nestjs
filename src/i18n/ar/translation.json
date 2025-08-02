@@ -1,7 +1,4 @@
 {
-  "createdSuccefully": "تم الانشاء بنجاح",
-  "updatedSuccefully": "تم التعديل بنجاح",
-  "deletedSuccefully": "تم التعديل بنجاح",
   "find_type_message": "إسم النوع موجود بالفعل",
   "type_not_found":"هذا النوع غير موجود",
   "car": {
@@ -12,8 +9,13 @@
     "updated_success": "تم تعديل السيارة بنجاح",
     "deleted_success": "تم حذف السيارة بنجاح"
   },
+  "createdSuccefully": "تم الانشاء بنجاح",
+  "updatedSuccefully": "تم التعديل بنجاح",
+  "deletedSuccefully": "تم التعديل بنجاح",
   "file_required": "الملف مطلوب",
-  "avatar":{
-    "not_found": "الأفاتار غير موجود"
-  }
+  "name_exists": "الاسم مستخدم مسبقًا",
+  "not_found": "العنصر غير موجود",
+  "email_exists": "البريد الإلكتروني مستخدم بالفعل",
+  "both_avatar_and_image": "اختر إما صورة رمزية أو قم برفع صورة، وليس كلاهما.",
+  "no_avatar_or_image": "يجب اختيار صورة رمزية أو رفع صورة."
 }
