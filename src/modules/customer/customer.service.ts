@@ -11,6 +11,7 @@ import { comparePassword, hashPassword } from 'src/common/utils/password';
 import { I18nService } from 'nestjs-i18n';
 import { Language } from 'src/common/enums/language';
 import { LoginCustomerDto } from './dto/login-customer.dto';
+import { Avatar } from '../avatar/entities/avatar.entity';
 
 @Injectable()
 export class CustomerService {
@@ -76,7 +77,7 @@ export class CustomerService {
 
     findById(id:number)
     {
-        return this.customerRepo.findByPk(id)
+        return this.customerRepo.findOne({where:{id},include:[{model:Avatar}]})
     }
 
     async login(dto:LoginCustomerDto,lang:Language.en)
