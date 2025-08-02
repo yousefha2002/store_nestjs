@@ -21,6 +21,13 @@ export class CarService {
 
     async create(customerId: number, dto: CreateCarDto) 
     {
+        const carCount = await this.carRepo.count({
+            where: { customerId },
+        });
+
+        if (carCount >= 5) {
+            throw new BadRequestException('لا يمكنك إضافة أكثر من 5 سيارات');
+        }
         const existing = await this.carRepo.findOne({
         where: {
             customerId,
