@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 
-export interface OpeningHour {
+export interface OpeningHourEnum {
   day: string;
   openTime: string | null;
   closeTime: string | null;
@@ -16,7 +16,7 @@ export enum DayOfWeek {
   SAT = 'sat',
 }
 
-export function validateAndParseOpeningHours(raw: string): OpeningHour[] {
+export function validateAndParseOpeningHours(raw: string): OpeningHourEnum[] {
   let parsed: any[];
 
   try {
@@ -78,7 +78,7 @@ export function validateAndParseOpeningHours(raw: string): OpeningHour[] {
   //   if (parsed.length !== 7) {
   //     throw new BadRequestException('Opining hours should include each days');
   //   }
-  return parsed as OpeningHour[];
+  return parsed as OpeningHourEnum[];
 }
 
 function isValidTimeFormat(time: string): boolean {

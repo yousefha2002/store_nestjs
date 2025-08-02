@@ -3,11 +3,12 @@ import { repositories } from 'src/common/enums/repositories';
 import { Store } from './entities/store.entity';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { CreateStoreDto } from './dto/create-store.dto';
-import { OpeningHour } from '../opening_hour/entites/opening_hour.entity';
 import { hashPassword } from 'src/common/utils/password';
 import { TypeService } from '../type/type.service';
 import { UploadApiResponse } from 'cloudinary';
-import { PickupMethodService } from '../pickup_method/pickup_method.service';
+import { PickupMethodEnum } from 'src/common/enums/pickedup_method';
+import { OpeningHourEnum } from 'src/common/utils/validateAndParseOpeningHours';
+import { OpeningHourService } from '../opening_hour/opening_hour.service';
 
 @Injectable()
 export class StoreService {
@@ -16,13 +17,13 @@ export class StoreService {
     private storeRepo: typeof Store,
     private readonly cloudinaryService: CloudinaryService,
     private readonly typeService: TypeService,
-    private readonly pickupMethodService: PickupMethodService,
+    private readonly openingHourService: OpeningHourService,
   ) {}
 
   async create(
     dto: CreateStoreDto,
     ownerId: string,
-    hours: OpeningHour[],
+    hours: OpeningHourEnum[],
     logo: Express.Multer.File,
     cover: Express.Multer.File,
   ) {
@@ -41,10 +42,9 @@ export class StoreService {
       logoUpload,
       coverUpload,
     );
-    await this.pickupMethodService.createMethodsForStore(
-      dto.pickupMethods,
-      newStore.id,
-    );
+
+    await this.openingHourService.createOpiningHourForStore(newStore.id, hours);
+    return { message: 'store has been created' };
   }
 
   async checkIfPoneUsed(phone: string) {
@@ -75,6 +75,8 @@ export class StoreService {
       coverUrl: coverUpload.secure_url,
       coverPublicId: coverUpload.public_id,
       ownerId: ownerId,
+      in_store: dto.pickupMethods.includes(PickupMethodEnum.IN_STORE),
+      drive_thru: dto.pickupMethods.includes(PickupMethodEnum.DRIVE_THRU),
     });
     return storeCreated;
   }

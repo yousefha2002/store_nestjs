@@ -13,8 +13,10 @@ import { StoreService } from './store.service';
 import { OwnerGuard } from 'src/common/guards/owner.guard';
 import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
 import { multerOptions } from 'src/multer/multer.options';
-import { validateAndParseOpeningHours } from 'src/common/utils/validateAndParseOpeningHours';
-import { OpeningHour } from '../opening_hour/entites/opening_hour.entity';
+import {
+  OpeningHourEnum,
+  validateAndParseOpeningHours,
+} from 'src/common/utils/validateAndParseOpeningHours';
 
 @Controller('store')
 export class StoreController {
@@ -53,7 +55,7 @@ export class StoreController {
     return this.storeService.create(
       body,
       user.id,
-      openingHours2 as OpeningHour[],
+      openingHours2 as OpeningHourEnum[],
       logoImage,
       coverImage,
     );

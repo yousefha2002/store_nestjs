@@ -5,11 +5,11 @@ import { StoreProvider } from './providers/store.provider';
 import { OwnerModule } from '../owner/owner.module';
 import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 import { TypeModule } from '../type/type.module';
-import { PickupMethodModule } from '../pickup_method/pickup_method.module';
+import { OpeningHourModule } from '../opening_hour/opening_hour.module';
 
 @Module({
   controllers: [StoreController],
   providers: [StoreService, ...StoreProvider],
-  imports: [OwnerModule, CloudinaryModule, TypeModule, PickupMethodModule],
+  imports: [OwnerModule, CloudinaryModule, TypeModule, OpeningHourModule],
 })
 export class StoreModule {}

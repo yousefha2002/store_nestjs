@@ -90,6 +90,14 @@ export class Store extends Model {
   @Column(DataType.BOOLEAN)
   order_permission: boolean;
 
+  @Default(false)
+  @Column(DataType.BOOLEAN)
+  drive_thru: boolean;
+
+  @Default(false)
+  @Column(DataType.BOOLEAN)
+  in_store: boolean;
+
   @HasMany(() => Order)
   orders: Order[];
 
