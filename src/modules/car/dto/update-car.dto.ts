@@ -1,30 +1,30 @@
 import { IsOptional, IsString, IsBoolean, IsInt } from 'class-validator';
 
 export class UpdateCarDto {
-    @IsString()
-    carName: string;
+  @IsString()
+  carName: string;
 
-    @IsInt()
-    carTypeId: number;
+  @IsInt()
+  carTypeId: number;
 
-    @IsInt()
-    colorId: number;
+  @IsString()
+  color: string;
 
-    @IsInt()
-    brandId: number;
+  @IsInt()
+  brandId: number;
 
-    @IsInt()
-    modelId: number;
+  @IsInt()
+  modelId: number;
 
-    @IsOptional()
-    @IsString()
-    plateNumber: string;
+  @IsOptional()
+  @IsString()
+  plateNumber: string;
 
-    @IsOptional()
-    @IsString()
-    plateLetters: string;
+  @IsOptional()
+  @IsString()
+  plateLetters: string;
 
-    @IsOptional()
-    @IsBoolean()
-    isDefault: boolean;
+  @IsOptional()
+  @IsBoolean()
+  isDefault: boolean;
 }
