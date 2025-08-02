@@ -67,4 +67,8 @@ export class OwnerService {
       token: access_token,
     };
   }
+
+  async findById(id: number) {
+    return this.ownerRepo.findOne({ where: { id } });
+  }
 }
