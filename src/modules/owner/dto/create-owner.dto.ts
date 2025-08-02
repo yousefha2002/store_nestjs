@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsString, IsPhoneNumber, IsEmail } from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail, IsMobilePhone } from 'class-validator';
 
 export class CreateOwnerDto {
   @IsEmail()
@@ -16,7 +16,7 @@ export class CreateOwnerDto {
   password: string;
 
   @Transform(({ value }) => value?.trim())
-  @IsPhoneNumber()
+  @IsMobilePhone()
   @IsNotEmpty()
   phone: string;
 
@@ -27,4 +27,8 @@ export class CreateOwnerDto {
   @IsString()
   @IsNotEmpty()
   taxNumber: string;
+
+  @IsNotEmpty()
+  @IsString()
+  token: string;
 }
