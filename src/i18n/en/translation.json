@@ -11,5 +11,9 @@
     "created_success": "Car created successfully",
     "updated_success": "Car updated successfully",
     "deleted_success": "Car deleted successfully"
+  },
+  "file_required": "File is required",
+  "avatar":{
+    "not_found": "Avatar not found"
   }
 }

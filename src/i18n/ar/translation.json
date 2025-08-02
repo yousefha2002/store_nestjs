@@ -11,5 +11,9 @@
     "created_success": "تم إنشاء السيارة بنجاح",
     "updated_success": "تم تعديل السيارة بنجاح",
     "deleted_success": "تم حذف السيارة بنجاح"
+  },
+  "file_required": "الملف مطلوب",
+  "avatar":{
+    "not_found": "الأفاتار غير موجود"
   }
 }
