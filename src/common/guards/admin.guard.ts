@@ -12,8 +12,8 @@ import { RoleStatus } from '../enums/role_status';
 export class AdminGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
-    private adminService:AdminService
-) {}
+    private adminService: AdminService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -34,7 +34,7 @@ export class AdminGuard implements CanActivate {
 
       const admin = await this.adminService.findOneById(decoded.id);
       if (!admin) {
-          throw new UnauthorizedException('Admin not found');
+        throw new UnauthorizedException('Admin not found');
       }
       request.currentUser = admin;
       return !!decoded.id;

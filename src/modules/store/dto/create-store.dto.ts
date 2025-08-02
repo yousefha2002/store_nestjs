@@ -8,50 +8,28 @@ import {
   IsEnum,
   ArrayNotEmpty,
   ValidateNested,
-  IsOptional,
+  IsMobilePhone,
 } from 'class-validator';
 import { PickupMethodEnum } from 'src/common/enums/pickedup_method';
 
 export class CreateStoreDto {
-  @IsEmail()
-  @IsNotEmpty()
-  email: string;
-
   @Transform(({ value }) => value?.trim().toLowerCase())
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsString()
-  @IsNotEmpty()
-  password: string;
-
   @Transform(({ value }) => value?.trim())
-  @IsPhoneNumber()
+  @IsMobilePhone()
   @IsNotEmpty()
   phone: string;
 
   @IsString()
   @IsNotEmpty()
-  commercialRegister: string;
-
-  @IsString()
-  @IsNotEmpty()
-  taxNumber: string;
-
-  @Transform(({ value }) => value?.trim().toLowerCase())
-  @IsString()
-  @IsNotEmpty()
-  storeName: string;
-
-  @Transform(({ value }) => value?.trim())
-  @IsPhoneNumber()
-  @IsNotEmpty()
-  storePhone: string;
-
-  @IsString()
-  @IsNotEmpty()
   address: string;
+
+  @IsString()
+  @IsNotEmpty()
+  typeId: string;
 
   @IsString()
   @IsNotEmpty()
@@ -60,10 +38,6 @@ export class CreateStoreDto {
   @IsString()
   @IsNotEmpty()
   lng: string;
-
-  @IsString()
-  @IsNotEmpty()
-  typeId: string;
 
   @IsArray()
   @ArrayNotEmpty()
