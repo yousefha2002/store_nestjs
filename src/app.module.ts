@@ -12,7 +12,6 @@ import { CustomerModule } from './modules/customer/customer.module';
 import { OfferModule } from './modules/offer/offer.module';
 import { OtpCodeModule } from './modules/otp_code/otp_code.module';
 import { OwnerModule } from './modules/owner/owner.module';
-import { PickupMethodModule } from './modules/pickup_method/pickup_method.module';
 import { ProductModule } from './modules/product/product.module';
 import { ProductExtraModule } from './modules/product_extra/product_extra.module';
 import { ProductImageModule } from './modules/product_image/product_image.module';
@@ -68,7 +67,6 @@ import * as path from 'path';
     OpeningHourModule,
     OtpCodeModule,
     OwnerModule,
-    PickupMethodModule,
     ProductModule,
     ProductExtraModule,
     ProductImageModule,

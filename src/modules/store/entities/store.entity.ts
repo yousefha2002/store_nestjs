@@ -48,7 +48,7 @@ export class Store extends Model {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  storeNumber: string;
+  password: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
@@ -89,6 +89,14 @@ export class Store extends Model {
   @Default(false)
   @Column(DataType.BOOLEAN)
   order_permission: boolean;
+
+  @Default(false)
+  @Column(DataType.BOOLEAN)
+  drive_thru: boolean;
+
+  @Default(false)
+  @Column(DataType.BOOLEAN)
+  in_store: boolean;
 
   @HasMany(() => Order)
   orders: Order[];

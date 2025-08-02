@@ -9,6 +9,7 @@ import { AdminModule } from '../admin/admin.module';
 @Module({
   controllers: [TypeController],
   providers: [TypeService, ...TypeProvider],
-  imports: [CloudinaryModule,AdminModule],
+  imports: [CloudinaryModule, AdminModule],
+  exports: [TypeService],
 })
 export class TypeModule {}

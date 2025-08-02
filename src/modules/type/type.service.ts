@@ -159,4 +159,12 @@ export class TypeService {
 
     return types;
   }
+
+  async findById(id: string | number) {
+    const type = await this.typeRepo.findByPk(id);
+    if (!type) {
+      throw new BadRequestException('Invalid type');
+    }
+    return type;
+  }
 }

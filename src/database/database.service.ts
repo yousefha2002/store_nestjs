@@ -11,7 +11,6 @@ import { Offer } from 'src/modules/offer/entities/offer.entity';
 import { OpeningHour } from 'src/modules/opening_hour/entites/opening_hour.entity';
 import { OtpCode } from 'src/modules/otp_code/entities/otp_code.entity';
 import { Owner } from 'src/modules/owner/entities/owner.entity';
-import { PickupMethod } from 'src/modules/pickup_method/entites/pickup_method.entity';
 import { Product } from 'src/modules/product/entities/product.entity';
 import { ProductExtra } from 'src/modules/product_extra/entities/product_extra.entity';
 import { ProductImage } from 'src/modules/product_image/entities/product_image.entity';
@@ -44,8 +43,8 @@ export const databaseProviders = [
         host: 'localhost',
         port: 3306,
         username: 'root',
-        password: '2838293yo',
-        // password: '059283805928388',
+        // password: '2838293yo',
+        password: '059283805928388',
         database: 'store_db',
       });
       sequelize.addModels([
@@ -66,7 +65,6 @@ export const databaseProviders = [
         OpeningHour,
         OtpCode,
         Owner,
-        PickupMethod,
         Product,
         ProductExtra,
         ProductImage,
