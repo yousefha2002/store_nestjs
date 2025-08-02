@@ -16,6 +16,7 @@ import { Avatar } from 'src/modules/avatar/entities/avatar.entity';
 import { Car } from 'src/modules/car/entities/car.entity';
 import { Cart } from 'src/modules/cart/entities/cart.entity';
 import { Gift } from 'src/modules/gift/entities/gift.entity';
+import { Order } from 'src/modules/order/entities/order.entity';
 
 @Table({ tableName: 'customers' })
 export class Customer extends Model{
@@ -74,4 +75,7 @@ export class Customer extends Model{
 
     @HasMany(() => Gift, 'receiverId')
     receivedGifts: Gift[];
+
+    @HasMany(() => Order)
+    orders: Order[];
 }

@@ -9,10 +9,14 @@ import {
     ForeignKey,
     BelongsTo,
     Default,
+    HasMany,
 } from 'sequelize-typescript';
 
 import { StoreStatus } from 'src/common/enums/store_status';
+import { Category } from 'src/modules/category/entities/category.entity';
+import { Order } from 'src/modules/order/entities/order.entity';
 import { Owner } from 'src/modules/owner/entities/owner.entity';
+import { Product } from 'src/modules/product/entities/product.entity';
 import { Type } from 'src/modules/type/entities/type.entity';
 
 @Table({ tableName: 'stores' })
@@ -85,4 +89,13 @@ export class Store extends Model{
     @Default(false)
     @Column(DataType.BOOLEAN)
     order_permission:boolean
+
+    @HasMany(() => Order)
+    orders: Order[];
+
+    @HasMany(() => Product)
+    product: Product[];
+
+    @HasMany(() => Category)
+    categories: Category[];
 }
