@@ -16,6 +16,7 @@ import { OpeningHourService } from '../opening_hour/opening_hour.service';
 import { LoginStoreDto } from './dto/store-login.dto';
 import { generateToken } from 'src/common/utils/generateToken';
 import { RoleStatus } from 'src/common/enums/role_status';
+import { StoreStatus } from 'src/common/enums/store_status';
 
 @Injectable()
 export class StoreService {
@@ -105,6 +106,17 @@ export class StoreService {
       store: { id: storeByPass.id, phone: storeByPass.phone },
       token: access_token,
     };
+  }
+
+  async changeStoreStatus(status: StoreStatus, storeId: number) {
+    console.log(storeId);
+    const store = await this.storeById(storeId);
+    if (!store) {
+      throw new BadRequestException('Store not found');
+    }
+    store.status = status;
+    await store.save();
+    return { message: 'store has been updated' };
   }
 
   async storeById(id: string | number) {

@@ -6,11 +6,18 @@ import { OwnerModule } from '../owner/owner.module';
 import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 import { TypeModule } from '../type/type.module';
 import { OpeningHourModule } from '../opening_hour/opening_hour.module';
+import { AdminModule } from '../admin/admin.module';
 
 @Module({
   controllers: [StoreController],
   providers: [StoreService, ...StoreProvider],
-  imports: [OwnerModule, CloudinaryModule, TypeModule, OpeningHourModule],
-  exports:[StoreService]
+  imports: [
+    OwnerModule,
+    CloudinaryModule,
+    TypeModule,
+    OpeningHourModule,
+    AdminModule,
+  ],
+  exports: [StoreService],
 })
 export class StoreModule {}

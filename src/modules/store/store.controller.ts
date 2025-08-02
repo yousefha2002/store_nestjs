@@ -7,6 +7,8 @@ import {
   UploadedFiles,
   BadRequestException,
   Get,
+  Put,
+  Param,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { CreateStoreDto } from './dto/create-store.dto';
@@ -19,6 +21,8 @@ import {
   validateAndParseOpeningHours,
 } from 'src/common/utils/validateAndParseOpeningHours';
 import { LoginStoreDto } from './dto/store-login.dto';
+import { StoreStatus } from 'src/common/enums/store_status';
+import { AdminGuard } from 'src/common/guards/admin.guard';
 
 @Controller('store')
 export class StoreController {
@@ -65,5 +69,17 @@ export class StoreController {
   @Post('login')
   login(@Body() body: LoginStoreDto) {
     return this.storeService.login(body);
+  }
+
+  @Put('/:storeId/approved')
+  @UseGuards(AdminGuard)
+  acceptStore(@Param('storeId') storeId: string) {
+    return this.storeService.changeStoreStatus(StoreStatus.APPROVED, +storeId);
+  }
+
+  @Put('/:storeId/rejected')
+  @UseGuards(AdminGuard)
+  rejectStore(@Param('storeId') storeId: string) {
+    return this.storeService.changeStoreStatus(StoreStatus.REJECTED, +storeId);
   }
 }

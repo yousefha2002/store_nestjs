@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { CategoryService } from './category.service';
-import { StoreOrOwnerGuard } from 'src/common/guards/StoreOrOwnerGuard';
+import { StoreOrOwnerGuard } from 'src/common/guards/StoreOrOwner.guard';
 import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
 import { Store } from '../store/entities/store.entity';
 
@@ -8,10 +8,9 @@ import { Store } from '../store/entities/store.entity';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-    @Get()
-    @UseGuards(StoreOrOwnerGuard)
-    validate(@CurrentUser() store:Store)
-    {
-      return store
-    }
+  @Get()
+  @UseGuards(StoreOrOwnerGuard)
+  validate(@CurrentUser() store: Store) {
+    return store;
+  }
 }
