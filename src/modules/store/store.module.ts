@@ -11,5 +11,6 @@ import { OpeningHourModule } from '../opening_hour/opening_hour.module';
   controllers: [StoreController],
   providers: [StoreService, ...StoreProvider],
   imports: [OwnerModule, CloudinaryModule, TypeModule, OpeningHourModule],
+  exports:[StoreService]
 })
 export class StoreModule {}
